@@ -1,0 +1,88 @@
+{
+  "expo": {
+    "name": "ثورة علمية - AI Termux",
+    "slug": "thawra-alimia-termux-ai",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#050510"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thawra.termux.ai"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#050510"
+      },
+      "package": "com.thawra.termux.ai",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "MANAGE_EXTERNAL_STORAGE",
+        "FOREGROUND_SERVICE",
+        "WAKE_LOCK",
+        "REQUEST_INSTALL_PACKAGES"
+      ],
+      "softwareKeyboardLayoutMode": "pan",
+      "buildProperties": {
+        "minSdkVersion": 24,
+        "targetSdkVersion": 34,
+        "compileSdkVersion": 34
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "@ffmpeg-kit/react-native",
+        {
+          "package": "full-gpl"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "نحتاج الكاميرا لتصوير الفيديوهات"
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "نحتاج الوصول للمكتبة",
+          "savePhotosPermission": "نحتاج إذن الحفظ",
+          "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
+        "expo-document-picker",
+        {}
+      ],
+      [
+        "expo-sharing",
+        {}
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "thawra-termux-ai-2026"
+      },
+      "termux": {
+        "bootstrap_url": "https://github.com/termux/termux-packages/releases",
+        "ffmpeg_deb_arch": "aarch64",
+        "local_api_port": 5000,
+        "ai_model_path": "/data/data/com.thawra.termux.ai/files/models"
+      }
+    }
+  }
+}
