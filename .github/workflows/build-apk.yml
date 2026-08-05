@@ -1,0 +1,106 @@
+name: Build APK with Termux FFmpeg
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: Build type
+        required: false
+        default: preview
+        type: choice
+        options: [preview, production]
+
+env:
+  NODE_VERSION: '20'
+  TERMUX_FFMPEG_VER: '7.0.2'
+  TERMUX_ARCH: aarch64
+
+jobs:
+  download-ffmpeg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Termux FFmpeg deb
+        run: |
+          VER=$TERMUX_FFMPEG_VER
+          ARCH=$TERMUX_ARCH
+          URL1=https://packages.termux.dev/apt/termux-main/pool/main/f/ffmpeg/ffmpeg_${VER}_${ARCH}.deb
+          URL2=https://github.com/termux/termux-packages/releases/download/ffmpeg-v${VER}/ffmpeg_${VER}_debian_${ARCH}.deb
+          curl -sL -o ffmpeg.deb $URL1 || curl -sL -o ffmpeg.deb $URL2 || touch ffmpeg.deb
+          ls -la ffmpeg.deb
+      - name: Extract FFmpeg from deb
+        run: |
+          mkdir -p bootstrap/usr/bin bootstrap/usr/lib
+          if [ -s ffmpeg.deb ]; then
+            ar x ffmpeg.deb data.tar.xz 2>/dev/null || ar x ffmpeg.deb data.tar.gz 2>/dev/null || true
+            tar -xf data.tar.* -C bootstrap/ 2>/dev/null || true
+            find bootstrap/ -name ffmpeg -type f | head -3
+            cp $(find bootstrap/ -name ffmpeg -type f | head -1) bootstrap/usr/bin/ 2>/dev/null || true
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: termux-bootstrap
+          path: bootstrap/
+          retention-days: 7
+
+  build-apk:
+    needs: download-ffmpeg
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm install --legacy-peer-deps
+      - uses: actions/download-artifact@v4
+        with:
+          name: termux-bootstrap
+          path: bootstrap/
+      - name: Integrate FFmpeg into Android assets
+        run: |
+          mkdir -p android/app/src/main/assets/termux
+          cp bootstrap/usr/bin/ffmpeg android/app/src/main/assets/termux/ 2>/dev/null || true
+          chmod +x android/app/src/main/assets/termux/ffmpeg 2>/dev/null || true
+      - run: npm install -g eas-cli@latest
+      - name: Build APK
+        run: |
+          eas build --platform android --profile preview --non-interactive --local --output thawra.apk 2>&1 || \
+          eas build --platform android --profile preview --non-interactive 2>&1
+      - name: Find output
+        id: out
+        run: |
+          APK=$(find . -name '*.apk' | head -1)
+          echo apk=$APK >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v4
+        if: steps.out.outputs.apk != ''
+        with:
+          name: thawra-alimia-apk
+          path: ${{ steps.out.outputs.apk }}
+          retention-days: 30
+
+  release:
+    needs: build-apk
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: thawra-alimia-apk
+          path: art/
+        continue-on-error: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.0.0-build-${{ github.run_number }}
+          name: Thawra Alimia v2.0.0 Build ${{ github.run_number }}
+          body: Local AI Chat App with Termux and FFmpegKit
+          files: art/*.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
