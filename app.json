@@ -43,36 +43,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "@ffmpeg-kit/react-native",
-        {
-          "package": "full-gpl"
-        }
-      ],
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "نحتاج الكاميرا لتصوير الفيديوهات"
-        }
-      ],
-      [
-        "expo-media-library",
-        {
-          "photosPermission": "نحتاج الوصول للمكتبة",
-          "savePhotosPermission": "نحتاج إذن الحفظ",
-          "isAccessMediaLocationEnabled": true
-        }
-      ],
-      [
-        "expo-document-picker",
-        {}
-      ],
-      [
-        "expo-sharing",
-        {}
-      ]
-    ],
+    "plugins": [],
     "extra": {
       "eas": {
         "projectId": "thawra-termux-ai-2026"
