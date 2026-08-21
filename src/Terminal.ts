@@ -27,6 +27,16 @@ export const Terminal = {
     return TerminalModule.isInstalled();
   },
 
+  /** Confirms CI actually shipped a proot binary matching this device's ABI. */
+  checkPrerequisites(): Promise<{
+    prootFound: boolean;
+    termuxExecFound: boolean;
+    nativeLibDir: string;
+    abi: string;
+  }> {
+    return TerminalModule.checkPrerequisites();
+  },
+
   /** Unpacks proot + termux-exec + the Alpine rootfs from the APK on first run. */
   installRootfs(onProgress?: (p: InstallProgress) => void): Promise<boolean> {
     let sub: { remove: () => void } | null = null;

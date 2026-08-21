@@ -1,0 +1,213 @@
+name: Build Terminal Assets
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-terminal-assets.yml'
+      - 'terminal-build/**'
+  workflow_dispatch:
+
+env:
+  APP_PACKAGE: com.thawra.termux.ai
+  API_LEVEL: 24
+  ALPINE_VERSION: "3.20.3"
+  ALPINE_BRANCH: "v3.20"
+  TALLOC_VERSION: "2.4.3"
+  LIBANDROID_SHMEM_VERSION: "0.7"
+
+jobs:
+  build-terminal-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Locate Android NDK
+        id: ndk
+        run: |
+          # GitHub-hosted ubuntu-latest runners ship a preinstalled NDK.
+          if [ -n "$ANDROID_NDK_LATEST_HOME" ]; then
+            echo "path=$ANDROID_NDK_LATEST_HOME" >> "$GITHUB_OUTPUT"
+          elif [ -n "$ANDROID_NDK_HOME" ]; then
+            echo "path=$ANDROID_NDK_HOME" >> "$GITHUB_OUTPUT"
+          else
+            echo "No preinstalled NDK found, installing via sdkmanager..."
+            yes | sdkmanager --install "ndk;26.3.11579264"
+            echo "path=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Show NDK version
+        run: |
+          echo "NDK at: ${{ steps.ndk.outputs.path }}"
+          ls "${{ steps.ndk.outputs.path }}" || true
+
+      - name: Set up cross-compiler env
+        id: cc
+        run: |
+          NDK="${{ steps.ndk.outputs.path }}"
+          TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/linux-x86_64"
+          echo "toolchain=$TOOLCHAIN" >> "$GITHUB_OUTPUT"
+          echo "$TOOLCHAIN/bin" >> "$GITHUB_PATH"
+          {
+            echo "CC=$TOOLCHAIN/bin/aarch64-linux-android${API_LEVEL}-clang"
+            echo "AR=$TOOLCHAIN/bin/llvm-ar"
+            echo "STRIP=$TOOLCHAIN/bin/llvm-strip"
+            echo "RANLIB=$TOOLCHAIN/bin/llvm-ranlib"
+            echo "SYSROOT=$TOOLCHAIN/sysroot"
+          } >> "$GITHUB_ENV"
+
+      - name: Verify cross-compiler works
+        run: |
+          echo 'int main(){return 0;}' > /tmp/t.c
+          "$CC" /tmp/t.c -o /tmp/t && echo "cross-compiler OK: $CC"
+
+      # ---------------------------------------------------------------
+      # talloc: proot's only hard dependency. Recipe below matches what
+      # termux-packages actually uses (packages/libtalloc/build.sh) -
+      # same source, same cross-answers file for talloc's waf-based
+      # configure (can't run target-arch test binaries on the host
+      # during cross-compilation, so waf needs precomputed answers).
+      # ---------------------------------------------------------------
+      - name: Build talloc (static)
+        id: talloc
+        run: |
+          set -e
+          mkdir -p build/talloc && cd build/talloc
+          curl -sL "https://www.samba.org/ftp/talloc/talloc-${TALLOC_VERSION}.tar.gz" -o talloc.tar.gz
+          tar xzf talloc.tar.gz --strip-components=1
+
+          cat > cross-answers.txt << 'EOF'
+          Checking uname sysname type: "Linux"
+          Checking uname machine type: "dontcare"
+          Checking uname release type: "dontcare"
+          Checking uname version type: "dontcare"
+          Checking simple C program: OK
+          building library support: OK
+          Checking for large file support: OK
+          Checking for -D_FILE_OFFSET_BITS=64: OK
+          Checking for WORDS_BIGENDIAN: OK
+          Checking for C99 vsnprintf: OK
+          Checking for HAVE_SECURE_MKSTEMP: OK
+          rpath library support: OK
+          -Wl,--version-script support: FAIL
+          Checking correct behavior of strtoll: OK
+          Checking correct behavior of strptime: OK
+          Checking for HAVE_IFACE_GETIFADDRS: OK
+          Checking for HAVE_IFACE_IFCONF: OK
+          Checking for HAVE_IFACE_IFREQ: OK
+          Checking getconf LFS_CFLAGS: OK
+          Checking for large file support without additional flags: OK
+          Checking for working strptime: OK
+          Checking for HAVE_SHARED_MMAP: OK
+          Checking for HAVE_MREMAP: OK
+          Checking for HAVE_INCOHERENT_MMAP: OK
+          Checking getconf large file support flags work: OK
+          EOF
+
+          PREFIX="$GITHUB_WORKSPACE/build/sysroot"
+          mkdir -p "$PREFIX"
+          CC="$CC" ./configure --prefix="$PREFIX" \
+            --disable-rpath --disable-python \
+            --cross-compile --cross-answers=cross-answers.txt
+
+          make -j"$(nproc)"
+
+          cd bin/default
+          "$AR" rcu libtalloc.a talloc*.o
+          mkdir -p "$PREFIX/lib" "$PREFIX/include"
+          cp libtalloc.a "$PREFIX/lib/"
+          find "$GITHUB_WORKSPACE/build/talloc" -maxdepth 1 -name "talloc.h" -exec cp {} "$PREFIX/include/" \;
+          echo "talloc built: $(ls -la $PREFIX/lib/libtalloc.a)"
+
+      # ---------------------------------------------------------------
+      # libandroid-shmem: optional (PROOT_WITH_LIBANDROID_SHMEM). Best
+      # effort - proot can build without it, just with SysV shm support
+      # emulated slightly differently. Not blocking if this step fails.
+      # ---------------------------------------------------------------
+      - name: Build libandroid-shmem (best effort)
+        id: shmem
+        continue-on-error: true
+        run: |
+          set -e
+          mkdir -p build/shmem && cd build/shmem
+          curl -sL "https://github.com/termux/libandroid-shmem/archive/refs/tags/v${LIBANDROID_SHMEM_VERSION}.tar.gz" -o shmem.tar.gz
+          tar xzf shmem.tar.gz --strip-components=1
+          PREFIX="$GITHUB_WORKSPACE/build/sysroot"
+          "$CC" -c ashmem.c -o ashmem.o -I.
+          "$CC" -c sys_shm_ashmem.c -o sys_shm_ashmem.o -I. 2>/dev/null || true
+          "$AR" rcs libandroid-shmem.a *.o
+          cp libandroid-shmem.a "$PREFIX/lib/" 2>/dev/null || true
+          cp android-shmem.h "$PREFIX/include/" 2>/dev/null || true
+          echo "libandroid-shmem: best-effort build attempted"
+
+      # ---------------------------------------------------------------
+      # proot itself. Real upstream source (termux's Android-patched
+      # fork), built with its own GNUmakefile - no termux-packages
+      # wrapper needed since the rootfs path is a runtime argument
+      # (-r), not something baked in at compile time.
+      # ---------------------------------------------------------------
+      - name: Build proot
+        id: proot
+        run: |
+          set -e
+          git clone --depth 1 https://github.com/termux/proot.git build/proot-src
+          cd build/proot-src/src
+          PREFIX="$GITHUB_WORKSPACE/build/sysroot"
+
+          SHMEM_FLAG=""
+          if [ -f "$PREFIX/lib/libandroid-shmem.a" ]; then
+            SHMEM_FLAG="PROOT_WITH_LIBANDROID_SHMEM=1"
+          fi
+
+          make -j"$(nproc)" \
+            CC="$CC" \
+            CFLAGS="-O2 -I$PREFIX/include" \
+            LDFLAGS="-L$PREFIX/lib -static-libgcc" \
+            $SHMEM_FLAG \
+            loader-elf loader.exe proot || \
+          make -j"$(nproc)" CC="$CC" CFLAGS="-O2 -I$PREFIX/include" LDFLAGS="-L$PREFIX/lib" proot
+
+          ls -la proot
+          "$STRIP" proot || true
+          file proot
+
+      - name: Collect proot into jniLibs
+        run: |
+          mkdir -p android/app/src/main/jniLibs/arm64-v8a
+          cp build/proot-src/src/proot android/app/src/main/jniLibs/arm64-v8a/libproot.so
+          chmod +x android/app/src/main/jniLibs/arm64-v8a/libproot.so
+          echo "--- jniLibs/arm64-v8a ---"
+          ls -la android/app/src/main/jniLibs/arm64-v8a/
+
+      # ---------------------------------------------------------------
+      # Alpine minirootfs: official, unmodified, from alpinelinux.org.
+      # This is just data (no compilation), bundled as an asset and
+      # extracted by the app on first run (see AssetInstaller.kt).
+      # ---------------------------------------------------------------
+      - name: Download Alpine minirootfs
+        run: |
+          set -e
+          mkdir -p assets/proot-dist
+          URL="https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/releases/aarch64/alpine-minirootfs-${ALPINE_VERSION}-aarch64.tar.gz"
+          echo "Fetching $URL"
+          curl -sL "$URL" -o assets/proot-dist/alpine-minirootfs.tar.gz
+          ls -la assets/proot-dist/
+          # sanity check it's a real gzip tarball, not an HTML error page
+          file assets/proot-dist/alpine-minirootfs.tar.gz | grep -qi gzip
+
+      - name: Upload terminal assets as artifact (for inspection)
+        uses: actions/upload-artifact@v4
+        with:
+          name: terminal-assets-debug
+          path: |
+            android/app/src/main/jniLibs/
+            assets/proot-dist/
+          retention-days: 14
+
+      - name: Commit assets back to repo
+        run: |
+          git config user.email "ci@local"
+          git config user.name "terminal-assets-ci"
+          git add -f android/app/src/main/jniLibs/ assets/proot-dist/
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "ci: rebuild terminal assets (proot + alpine rootfs) [skip ci]"
+          git push

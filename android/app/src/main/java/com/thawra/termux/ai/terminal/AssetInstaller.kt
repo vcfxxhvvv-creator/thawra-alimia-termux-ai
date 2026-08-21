@@ -8,15 +8,23 @@ import java.io.FileOutputStream
 import java.util.zip.GZIPInputStream
 
 /**
- * APK assets are read-only and (for anything not explicitly stored
- * uncompressed) not directly executable in place, so on first launch we
- * copy the real proot ELF binary + termux-exec .so out to filesDir and
- * chmod them executable, and unpack the Alpine rootfs tarball next to them.
+ * IMPORTANT: proot and termux-exec are NOT handled here as copied assets.
  *
- * Expected layout under assets/proot-dist/ (produced by CI):
- *   usr/bin/proot
- *   usr/lib/libtermux-exec.so
- *   alpine-minirootfs.tar.gz
+ * Android 10+ enforces W^X on app-private storage (files copied into
+ * filesDir/cache and chmod'd executable at runtime are blocked from
+ * executing on many devices/kernels - this is the actual cause behind
+ * the "behaves differently depending on the device" behavior mentioned
+ * early on). The reliable, standard way around this (what Termux and
+ * UserLAnd both do) is to ship native executables as fake `.so` files
+ * under jniLibs/<abi>/, which Android's own packaging extracts to the
+ * app's nativeLibraryDir - a location Android explicitly permits
+ * execution from. See android/app/src/main/jniLibs/ (populated by CI)
+ * and how TerminalModule resolves `context.applicationInfo.nativeLibraryDir`.
+ *
+ * This class only handles the Alpine rootfs, which is plain data (no
+ * execute bit needed), so extracting it into filesDir is fine.
+ *
+ * Expected asset (produced by CI): assets/proot-dist/alpine-minirootfs.tar.gz
  */
 object AssetInstaller {
 
@@ -33,18 +41,7 @@ object AssetInstaller {
         targetDir.mkdirs()
         val am = context.assets
 
-        onProgress(5, "copying proot binary")
-        val prootOut = File(targetDir, "usr/bin/proot")
-        copyAssetFile(am, "$ASSET_ROOT/usr/bin/proot", prootOut)
-        prootOut.setExecutable(true, false)
-        prootOut.setReadable(true, false)
-
-        onProgress(20, "copying termux-exec shim")
-        val execOut = File(targetDir, "usr/lib/libtermux-exec.so")
-        copyAssetFile(am, "$ASSET_ROOT/usr/lib/libtermux-exec.so", execOut)
-        execOut.setReadable(true, false)
-
-        onProgress(35, "unpacking alpine rootfs")
+        onProgress(10, "unpacking alpine rootfs")
         val tarball = File(targetDir, "alpine-minirootfs.tar.gz")
         copyAssetFile(am, "$ASSET_ROOT/alpine-minirootfs.tar.gz", tarball)
 
@@ -52,8 +49,8 @@ object AssetInstaller {
         rootfsDir.mkdirs()
         GZIPInputStream(tarball.inputStream().buffered()).use { gz ->
             MiniTarExtractor.extract(gz, rootfsDir) { pct ->
-                // scale the 0-100 extraction progress into our 35-95 slice
-                onProgress(35 + (pct * 60 / 100), "unpacking alpine rootfs")
+                // scale the 0-100 extraction progress into our 10-95 slice
+                onProgress(10 + (pct * 85 / 100), "unpacking alpine rootfs")
             }
         }
         tarball.delete()

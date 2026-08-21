@@ -23,11 +23,11 @@ import java.io.InputStreamReader
  * streams its stdout/stdin back and forth over the React Native bridge so
  * JS can show it in the UI and/or let the on-device model use it as a tool.
  *
- * Binaries expected under filesDir/proot-dist/ (produced by CI, see
- * .github/workflows/build-terminal-assets.yml):
- *   usr/bin/proot                  - proot cross-compiled for this app
- *   usr/lib/libtermux-exec.so      - LD_PRELOAD shim (see termux/termux-exec)
- *   alpine/                        - extracted Alpine minirootfs
+ * proot and termux-exec ship as jniLibs (libproot.so / libtermuxexec.so,
+ * produced by CI - see .github/workflows/build-terminal-assets.yml) so
+ * Android's own packaging places them somewhere execution is permitted
+ * on Android 10+. Only the Alpine rootfs (plain data) is extracted into
+ * filesDir at runtime - see AssetInstaller.
  */
 class TerminalModule(reactContext: ReactApplicationContext) :
     ReactContextBaseJavaModule(reactContext) {
@@ -37,6 +37,9 @@ class TerminalModule(reactContext: ReactApplicationContext) :
 
     private val distDir: File
         get() = File(reactApplicationContext.filesDir, "proot-dist")
+
+    private val nativeLibDir: String
+        get() = reactApplicationContext.applicationInfo.nativeLibraryDir
 
     override fun getName() = "TerminalModule"
 
@@ -57,6 +60,19 @@ class TerminalModule(reactContext: ReactApplicationContext) :
     fun isInstalled(promise: Promise) {
         val marker = File(distDir, ".installed")
         promise.resolve(marker.exists())
+    }
+
+    /** Sanity check that CI actually produced a proot binary for this device's ABI. */
+    @ReactMethod
+    fun checkPrerequisites(promise: Promise) {
+        val prootBin = File(nativeLibDir, "libproot.so")
+        val execShim = File(nativeLibDir, "libtermuxexec.so")
+        val result = com.facebook.react.bridge.Arguments.createMap()
+        result.putBoolean("prootFound", prootBin.exists())
+        result.putBoolean("termuxExecFound", execShim.exists())
+        result.putString("nativeLibDir", nativeLibDir)
+        result.putString("abi", android.os.Build.SUPPORTED_ABIS.firstOrNull() ?: "unknown")
+        promise.resolve(result)
     }
 
     /**
@@ -89,10 +105,21 @@ class TerminalModule(reactContext: ReactApplicationContext) :
             return
         }
 
+        val prootFile = File(nativeLibDir, "libproot.so")
+        val execFile = File(nativeLibDir, "libtermuxexec.so")
+        if (!prootFile.exists()) {
+            promise.reject(
+                "PROOT_MISSING",
+                "No proot binary for this device's ABI (${android.os.Build.SUPPORTED_ABIS.joinToString()}) " +
+                    "in $nativeLibDir. CI likely only built for one ABI - check build-terminal-assets.yml."
+            )
+            return
+        }
+
         Thread {
             try {
-                val prootBin = File(distDir, "usr/bin/proot").absolutePath
-                val ldPreload = File(distDir, "usr/lib/libtermux-exec.so").absolutePath
+                val prootBin = prootFile.absolutePath
+                val ldPreload = execFile.absolutePath
                 val rootfs = File(distDir, "alpine").absolutePath
                 val tmp = File(reactApplicationContext.filesDir, "proot-tmp").apply { mkdirs() }
 
@@ -112,7 +139,11 @@ class TerminalModule(reactContext: ReactApplicationContext) :
 
                 val pb = ProcessBuilder(cmd)
                 pb.environment()["PROOT_TMP_DIR"] = tmp.absolutePath
-                pb.environment()["LD_PRELOAD"] = ldPreload
+                if (execFile.exists()) {
+                    pb.environment()["LD_PRELOAD"] = ldPreload
+                } else {
+                    emit("onSessionState", "warning:termux-exec missing, exec() edge cases may fail")
+                }
                 pb.redirectErrorStream(true)
                 pb.directory(distDir)
 
