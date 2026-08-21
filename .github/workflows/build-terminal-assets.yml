@@ -161,16 +161,35 @@ jobs:
           # .DEFAULT_GOAL in proot's GNUmakefile is `proot`, which already
           # pulls in the loader as an order-only prerequisite - no need to
           # (wrongly) name loader targets explicitly like the first attempt did.
+          set +e
           make -j"$(nproc)" \
             CC="$CC" \
             CFLAGS="-O2 -I$PREFIX/include" \
             LDFLAGS="-L$PREFIX/lib" \
             $SHMEM_FLAG \
-            V=1
+            V=1 2>&1 | tee "$GITHUB_WORKSPACE/proot-build.log"
+          BUILD_STATUS=${PIPESTATUS[0]}
+          set -e
+          if [ "$BUILD_STATUS" -ne 0 ]; then
+            echo "proot build failed with status $BUILD_STATUS"
+            exit 1
+          fi
 
           ls -la proot
           "$STRIP" proot || true
           file proot
+
+      - name: Save build log on failure
+        if: failure()
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          mkdir -p ci-debug
+          cp proot-build.log ci-debug/proot-build.log 2>/dev/null || echo "no log captured" > ci-debug/proot-build.log
+          git config user.email "ci@local"
+          git config user.name "terminal-assets-ci"
+          git add -f ci-debug/proot-build.log
+          git commit -m "ci: capture failed proot build log [skip ci]"
+          git push origin HEAD:main
 
       - name: Collect proot into jniLibs
         run: |
