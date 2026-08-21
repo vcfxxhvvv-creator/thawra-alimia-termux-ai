@@ -1,0 +1,96 @@
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./cli/note.c -o cli/note.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/enter.c -o execve/enter.o
+./execve/enter.c:538:30: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+  538 |         loader_path = talloc_strdup(talloc_autofree_context(), path);
+      |                                     ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+ 1084 | _PUBLIC_ void *talloc_autofree_context(void) _DEPRECATED_;
+      |                                              ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+  119 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/exit.c -o execve/exit.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/shebang.c -o execve/shebang.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/elf.c -o execve/elf.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/ldso.c -o execve/ldso.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/auxv.c -o execve/auxv.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/binding.c -o path/binding.o
+1 warning generated.
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/glue.c -o path/glue.o
+./path/glue.c:76:14: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+   76 |         autofreed = talloc_autofree_context();
+      |                     ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+ 1084 | _PUBLIC_ void *talloc_autofree_context(void) _DEPRECATED_;
+      |                                              ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+  119 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/canon.c -o path/canon.o
+1 warning generated.
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/f2fs-bug.c -o path/f2fs-bug.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/proc.c -o path/proc.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/temp.c -o path/temp.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/syscall.c -o syscall/syscall.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/chain.c -o syscall/chain.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/enter.c -o syscall/enter.o
+./path/temp.c:37:33: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+   37 |         temp_directory = talloc_strdup(talloc_autofree_context(), tmp);
+      |                                        ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+ 1084 | _PUBLIC_ void *talloc_autofree_context(void) _DEPRECATED_;
+      |                                              ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+  119 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+./path/temp.c:273:13: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+  273 |                 context = talloc_autofree_context();
+      |                           ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+ 1084 | _PUBLIC_ void *talloc_autofree_context(void) _DEPRECATED_;
+      |                                              ^
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
+  119 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/exit.c -o syscall/exit.o
+2 warnings generated.
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/sysnum.c -o syscall/sysnum.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/socket.c -o syscall/socket.o
+./syscall/socket.c:123:10: warning: 'mktemp' is deprecated: mktemp is unsafe, use mkstemp or tmpfile instead [-Wdeprecated-declarations]
+  123 |                 (void) mktemp(shorter_host_path);
+      |                        ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/../sysroot/usr/include/stdlib.h:61:66: note: 'mktemp' has been explicitly marked deprecated here
+   61 | char* _Nullable mktemp(char* _Nonnull __template) __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
+      |                                                                  ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/heap.c -o syscall/heap.o
+1 warning generated.
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/rlimit.c -o syscall/rlimit.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/pipe_shadow.c -o syscall/pipe_shadow.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/tracee.c -o tracee/tracee.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/reg.c -o tracee/reg.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/event.c -o tracee/event.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/seccomp.c -o tracee/seccomp.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/statx.c -o tracee/statx.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./ptrace/ptrace.c -o ptrace/ptrace.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./ptrace/user.c -o ptrace/user.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./ptrace/wait.c -o ptrace/wait.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/ashmem_memfd/ashmem_memfd.c -o extension/ashmem_memfd/ashmem_memfd.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/kompat/kompat.c -o extension/kompat/kompat.o
+./extension/ashmem_memfd/ashmem_memfd.c:42:12: error: call to undeclared library function 'strcmp' with type 'int (const char *, const char *)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   42 |                 if (0 == strcmp(assume_unsupported, "1")) {
+      |                          ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fake_id0/chown.c -o extension/fake_id0/chown.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fake_id0/chroot.c -o extension/fake_id0/chroot.o
+./extension/ashmem_memfd/ashmem_memfd.c:42:12: note: include the header <string.h> or explicitly provide a declaration for 'strcmp'
+./extension/ashmem_memfd/ashmem_memfd.c:179:3: error: call to undeclared library function 'memset' with type 'void *(void *, int, unsigned long)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  179 |                 memset(state, 0, sizeof(*state));
+      |                 ^
+./extension/ashmem_memfd/ashmem_memfd.c:179:3: note: include the header <string.h> or explicitly provide a declaration for 'memset'
+2 errors generated.
+make: *** [GNUmakefile:202: extension/ashmem_memfd/ashmem_memfd.o] Error 1
+make: *** Waiting for unfinished jobs....
+./extension/fake_id0/chroot.c:54:2: warning: ignoring return value of function declared with 'warn_unused_result' attribute [-Wunused-result]
+   54 |         realpath(path, path_host_absolute);
+      |         ^~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+rm .check_seccomp_filter.o .check_process_vm.o
