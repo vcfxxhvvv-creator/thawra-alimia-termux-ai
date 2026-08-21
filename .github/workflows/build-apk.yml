@@ -50,15 +50,3 @@ jobs:
           name: thawra-alimia-apk
           path: ${{ steps.findapk.outputs.apk }}
           retention-days: 30
-      - name: Create Release
-        if: steps.findapk.outputs.apk != '' && github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: v2.0.0-${{ github.run_number }}
-          name: Thawra Alimia v2.0.0 Build ${{ github.run_number }}
-          body: Local AI Chat App with Termux and FFmpegKit - APK attached
-          files: ${{ steps.findapk.outputs.apk }}
-          draft: false
-          prerelease: false
-        env: {GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'}
-        continue-on-error: true
