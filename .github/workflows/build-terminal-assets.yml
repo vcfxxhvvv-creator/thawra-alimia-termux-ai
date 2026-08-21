@@ -7,6 +7,9 @@ on:
       - 'terminal-build/**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   APP_PACKAGE: com.thawra.termux.ai
   API_LEVEL: 24
