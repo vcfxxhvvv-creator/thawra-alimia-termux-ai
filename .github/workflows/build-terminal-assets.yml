@@ -158,13 +158,15 @@ jobs:
             SHMEM_FLAG="PROOT_WITH_LIBANDROID_SHMEM=1"
           fi
 
+          # .DEFAULT_GOAL in proot's GNUmakefile is `proot`, which already
+          # pulls in the loader as an order-only prerequisite - no need to
+          # (wrongly) name loader targets explicitly like the first attempt did.
           make -j"$(nproc)" \
             CC="$CC" \
             CFLAGS="-O2 -I$PREFIX/include" \
-            LDFLAGS="-L$PREFIX/lib -static-libgcc" \
+            LDFLAGS="-L$PREFIX/lib" \
             $SHMEM_FLAG \
-            loader-elf loader.exe proot || \
-          make -j"$(nproc)" CC="$CC" CFLAGS="-O2 -I$PREFIX/include" LDFLAGS="-L$PREFIX/lib" proot
+            V=1
 
           ls -la proot
           "$STRIP" proot || true
