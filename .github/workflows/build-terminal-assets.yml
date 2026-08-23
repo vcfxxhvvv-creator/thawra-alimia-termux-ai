@@ -49,6 +49,20 @@ jobs:
           NDK="${{ steps.ndk.outputs.path }}"
           TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/linux-x86_64"
           echo "toolchain=$TOOLCHAIN" >> "$GITHUB_OUTPUT"
+
+          # proot's GNUmakefile calls bare `objdump`/`objcopy` (no llvm-
+          # prefix, no path) in a couple of places to repackage the loader.
+          # Left alone, those resolve to the HOST's x86_64 GNU binutils,
+          # which can't make sense of an aarch64-android object file
+          # ("architecture UNKNOWN"). Shadow them with wrappers pointing
+          # at the NDK's LLVM tools, placed first in PATH.
+          mkdir -p "$HOME/ndk-shims"
+          ln -sf "$TOOLCHAIN/bin/llvm-objcopy" "$HOME/ndk-shims/objcopy"
+          ln -sf "$TOOLCHAIN/bin/llvm-objdump" "$HOME/ndk-shims/objdump"
+          ln -sf "$TOOLCHAIN/bin/llvm-ar"      "$HOME/ndk-shims/ar"
+          ln -sf "$TOOLCHAIN/bin/llvm-strip"   "$HOME/ndk-shims/strip"
+          ln -sf "$TOOLCHAIN/bin/llvm-ranlib"  "$HOME/ndk-shims/ranlib"
+          echo "$HOME/ndk-shims" >> "$GITHUB_PATH"
           echo "$TOOLCHAIN/bin" >> "$GITHUB_PATH"
           {
             echo "CC=$TOOLCHAIN/bin/aarch64-linux-android${API_LEVEL}-clang"
