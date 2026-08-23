@@ -35,14 +35,26 @@ def main() -> int:
     )
 
     pattern = re.compile(r"OBJIFY = .*?\$< \$@\n", re.DOTALL)
-    new_content, n = pattern.subn(new_objify, content, count=1)
-    if n != 1:
-        print(f"error: expected exactly 1 OBJIFY match, got {n}", file=sys.stderr)
+    content, n_objify = pattern.subn(new_objify, content, count=1)
+    if n_objify != 1:
+        print(f"error: expected exactly 1 OBJIFY match, got {n_objify}", file=sys.stderr)
         return 1
 
+    # We only ever build for one target (aarch64-android) and only need to
+    # run 64-bit Alpine binaries, so the 32-bit legacy loader is unneeded -
+    # and its object file can't be linked into a pure-64-bit proot binary
+    # via ld.lld ("incompatible with aarch64linux"). Removing the line that
+    # turns HAS_LOADER_32BIT on skips every `ifdef HAS_LOADER_32BIT` block
+    # (build/objcopy/link/install) for it.
+    loader32_line = "$(eval $(call define_from_arch.h,,HAS_LOADER_32BIT))\n"
+    if loader32_line not in content:
+        print("error: HAS_LOADER_32BIT eval line not found", file=sys.stderr)
+        return 1
+    content = content.replace(loader32_line, "", 1)
+
     with open(path, "w") as f:
-        f.write(new_content)
-    print(f"Patched OBJIFY macro in {path}")
+        f.write(content)
+    print(f"Patched OBJIFY macro and disabled HAS_LOADER_32BIT in {path}")
     return 0
 
 
