@@ -43,14 +43,27 @@ def main() -> int:
     # We only ever build for one target (aarch64-android) and only need to
     # run 64-bit Alpine binaries, so the 32-bit legacy loader is unneeded -
     # and its object file can't be linked into a pure-64-bit proot binary
-    # via ld.lld ("incompatible with aarch64linux"). Removing the line that
-    # turns HAS_LOADER_32BIT on skips every `ifdef HAS_LOADER_32BIT` block
-    # (build/objcopy/link/install) for it.
-    loader32_line = "$(eval $(call define_from_arch.h,,HAS_LOADER_32BIT))\n"
-    if loader32_line not in content:
-        print("error: HAS_LOADER_32BIT eval line not found", file=sys.stderr)
+    # via ld.lld ("incompatible with aarch64linux"). Just removing the line
+    # that turns HAS_LOADER_32BIT on wasn't enough (still got built/linked
+    # on the next run - something else must also feed it), so instead we
+    # strip every `ifdef HAS_LOADER_32BIT ... endif` block outright. That
+    # can't be defeated by whatever ends up (re-)defining the variable.
+    block_pattern = re.compile(r"ifdef HAS_LOADER_32BIT\n.*?\nendif\n", re.DOTALL)
+    content, n_blocks = block_pattern.subn("", content)
+    if n_blocks == 0:
+        print("error: no 'ifdef HAS_LOADER_32BIT' blocks found", file=sys.stderr)
         return 1
-    content = content.replace(loader32_line, "", 1)
+    print(f"Removed {n_blocks} 'ifdef HAS_LOADER_32BIT' block(s)")
+
+    # Belt and suspenders: also neutralize the line that sets it, in case
+    # a future proot version reorders things.
+    content = re.sub(
+        r"^\$\(eval \$\(call define_from_arch\.h,,HAS_LOADER_32BIT\)\)\n",
+        "",
+        content,
+        count=1,
+        flags=re.MULTILINE,
+    )
 
     with open(path, "w") as f:
         f.write(content)
