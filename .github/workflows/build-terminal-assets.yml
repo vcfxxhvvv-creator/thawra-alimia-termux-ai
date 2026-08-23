@@ -153,6 +153,13 @@ jobs:
         run: |
           set -e
           git clone --depth 1 https://github.com/termux/proot.git build/proot-src
+
+          # NDK 29's clang treats implicit function declarations as a hard
+          # error (older toolchains only warned). This file uses strcmp()/
+          # memset() without including string.h - real bug, one-line fix.
+          sed -i '1i #include <string.h>' \
+            build/proot-src/src/extension/ashmem_memfd/ashmem_memfd.c
+
           cd build/proot-src/src
           PREFIX="$GITHUB_WORKSPACE/build/sysroot"
 
