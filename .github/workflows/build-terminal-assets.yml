@@ -183,26 +183,7 @@ jobs:
           # shell auto-detection with a plain Make conditional on $@
           # (loader-m32 needs elf32-littlearm/arm, the normal loader
           # needs elf64-littleaarch64/aarch64).
-          python3 - << 'PYEOF'
-import re
-path = "build/proot-src/src/GNUmakefile"
-with open(path) as f:
-    content = f.read()
-
-new_objify = (
-    "OBJIFY = $(OBJCOPY) --input-target=binary "
-    "--output-target=$(if $(findstring m32,$@),elf32-littlearm,elf64-littleaarch64) "
-    "--binary-architecture $(if $(findstring m32,$@),arm,aarch64) $< $@\n"
-)
-
-pattern = re.compile(r"OBJIFY = .*?\$< \$@\n", re.DOTALL)
-new_content, n = pattern.subn(new_objify, content, count=1)
-if n != 1:
-    raise SystemExit(f"expected exactly 1 OBJIFY match, got {n}")
-with open(path, "w") as f:
-    f.write(new_content)
-print("Patched OBJIFY macro")
-PYEOF
+          python3 terminal-build/patch_proot_makefile.py build/proot-src/src/GNUmakefile
 
           cd build/proot-src/src
           PREFIX="$GITHUB_WORKSPACE/build/sysroot"
