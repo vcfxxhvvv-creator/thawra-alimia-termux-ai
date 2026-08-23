@@ -128,10 +128,14 @@ jobs:
 
           make -j"$(nproc)"
 
-          cd bin/default
-          "$AR" rcu libtalloc.a talloc*.o
+          # Archive every .o waf produced (not just a narrow talloc*.o
+          # glob in bin/default/ - that missed several object files in
+          # subdirectories, which showed up later as undefined symbols
+          # like talloc_unlink/talloc_get_name when linking proot).
           mkdir -p "$PREFIX/lib" "$PREFIX/include"
-          cp libtalloc.a "$PREFIX/lib/"
+          find bin -name "*.o" -print0 | xargs -0 "$AR" rcs "$PREFIX/lib/libtalloc.a"
+          echo "objects archived:"
+          "$AR" t "$PREFIX/lib/libtalloc.a"
           find "$GITHUB_WORKSPACE/build/talloc" -maxdepth 1 -name "talloc.h" -exec cp {} "$PREFIX/include/" \;
           echo "talloc built: $(ls -la $PREFIX/lib/libtalloc.a)"
 
