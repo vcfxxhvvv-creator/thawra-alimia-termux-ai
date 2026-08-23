@@ -18,3 +18,5 @@ ios/build/
 *.aab
 bin/
 lib/
+__pycache__/
+*.pyc
