@@ -14,8 +14,8 @@
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/elf.c -o execve/elf.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/ldso.c -o execve/ldso.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./execve/auxv.c -o execve/auxv.o
-1 warning generated.
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/binding.c -o path/binding.o
+1 warning generated.
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/glue.c -o path/glue.o
 ./path/glue.c:76:14: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
    76 |         autofreed = talloc_autofree_context();
@@ -26,8 +26,8 @@
 /home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include/talloc.h:119:38: note: expanded from macro '_DEPRECATED_'
   119 | #define _DEPRECATED_ __attribute__ ((deprecated))
       |                                      ^
-/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/canon.c -o path/canon.o
 1 warning generated.
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/canon.c -o path/canon.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/f2fs-bug.c -o path/f2fs-bug.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/proc.c -o path/proc.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/temp.c -o path/temp.o
@@ -52,8 +52,8 @@
   119 | #define _DEPRECATED_ __attribute__ ((deprecated))
       |                                      ^
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/enter.c -o syscall/enter.o
-2/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/exit.c -o syscall/exit.o
- warnings generated.
+2 warnings generated.
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/exit.c -o syscall/exit.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/sysnum.c -o syscall/sysnum.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/socket.c -o syscall/socket.o
 ./syscall/socket.c:123:10: warning: 'mktemp' is deprecated: mktemp is unsafe, use mkstemp or tmpfile instead [-Wdeprecated-declarations]
@@ -62,8 +62,8 @@
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/../sysroot/usr/include/stdlib.h:61:66: note: 'mktemp' has been explicitly marked deprecated here
    61 | char* _Nullable mktemp(char* _Nonnull __template) __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
       |                                                                  ^
-1 warning generated.
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/heap.c -o syscall/heap.o
+1 warning generated.
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/rlimit.c -o syscall/rlimit.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/pipe_shadow.c -o syscall/pipe_shadow.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/tracee.c -o tracee/tracee.o
@@ -83,8 +83,8 @@
 ./extension/fake_id0/chroot.c:54:2: warning: ignoring return value of function declared with 'warn_unused_result' attribute [-Wunused-result]
    54 |         realpath(path, path_host_absolute);
       |         ^~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~
-1 warning generated.
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fake_id0/socket.c -o extension/fake_id0/socket.o
+1 warning generated.
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fake_id0/open.c -o extension/fake_id0/open.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fake_id0/unlink.c -o extension/fake_id0/unlink.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fake_id0/rename.c -o extension/fake_id0/rename.o
@@ -102,6 +102,7 @@
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/mountinfo/mountinfo.c -o extension/mountinfo/mountinfo.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/port_switch/port_switch.c -o extension/port_switch/port_switch.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/sysvipc/sysvipc.c -o extension/sysvipc/sysvipc.o
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/sysvipc/sysvipc_msg.c -o extension/sysvipc/sysvipc_msg.o
 ./extension/port_switch/port_switch.c:174:100: warning: sizeof on array function parameter will return size of 'long *' instead of 'long[]' [-Wsizeof-array-argument]
   174 |                     write_data(tracee, peek_reg(tracee, CURRENT, SYSARG_2), socketcall_arg2, sizeof(socketcall_arg2));
       |                                                                                                    ^
@@ -127,18 +128,17 @@
   145 | void mod_port(Tracee *tracee, bool is_socketcall, bool is_bind, bool is_udp, struct sockaddr_storage *my_sockaddr, long socketcall_arg2[]) {   
       |                                                                                                                         ^
 4 warnings generated.
-/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/sysvipc/sysvipc_msg.c -o extension/sysvipc/sysvipc_msg.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/sysvipc/sysvipc_sem.c -o extension/sysvipc/sysvipc_sem.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/sysvipc/sysvipc_shm.c -o extension/sysvipc/sysvipc_shm.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/link2symlink/link2symlink.c -o extension/link2symlink/link2symlink.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/fix_symlink_size/fix_symlink_size.c -o extension/fix_symlink_size/fix_symlink_size.o
-/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./loader/loader.c -o loader/loader.o  -fPIC -ffreestanding 
 ./extension/sysvipc/sysvipc_shm.c:814:10: warning: 'mktemp' is deprecated: mktemp is unsafe, use mkstemp or tmpfile instead [-Wdeprecated-declarations]
   814 |                 (void) mktemp(path);
       |                        ^
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/../sysroot/usr/include/stdlib.h:61:66: note: 'mktemp' has been explicitly marked deprecated here
    61 | char* _Nullable mktemp(char* _Nonnull __template) __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
       |                                                                  ^
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./loader/loader.c -o loader/loader.o  -fPIC -ffreestanding 
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./loader/assembly.S -o loader/assembly.o  -fPIC -ffreestanding 
 1 warning generated.
 ./loader/loader.c:253:5: warning: inline asm clobber list contains reserved registers: SP [-Winline-asm]
@@ -167,105 +167,83 @@ echo "#endif /* BUILD_H */" >> build.h
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./path/path.c -o path/path.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./syscall/seccomp.c -o syscall/seccomp.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./tracee/mem.c -o tracee/mem.o
-cp loader/loader loader.exe
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./extension/extension.c -o extension/extension.o
+cp loader/loader loader.exe
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip loader.exe
 readelf -s loader/loader | awk -f loader/loader-info.awk > loader/loader-info.c
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I./ -O2 -I/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/include -MD -c ./loader/loader-info.c -o loader/loader-info.o
 objcopy --input-target=binary --output-target=elf64-littleaarch64 --binary-architecture aarch64 loader.exe loader/loader-wrapped.o
 /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -o proot cli/cli.o cli/proot.o cli/note.o execve/enter.o execve/exit.o execve/shebang.o execve/elf.o execve/ldso.o execve/auxv.o execve/aoxp.o path/binding.o path/glue.o path/canon.o path/f2fs-bug.o path/path.o path/proc.o path/temp.o syscall/seccomp.o syscall/syscall.o syscall/chain.o syscall/enter.o syscall/exit.o syscall/sysnum.o syscall/socket.o syscall/heap.o syscall/rlimit.o syscall/pipe_shadow.o tracee/tracee.o tracee/mem.o tracee/reg.o tracee/event.o tracee/seccomp.o tracee/statx.o ptrace/ptrace.o ptrace/user.o ptrace/wait.o extension/extension.o extension/ashmem_memfd/ashmem_memfd.o extension/kompat/kompat.o extension/fake_id0/chown.o extension/fake_id0/chroot.o extension/fake_id0/getsockopt.o extension/fake_id0/sendmsg.o extension/fake_id0/socket.o extension/fake_id0/open.o extension/fake_id0/unlink.o extension/fake_id0/rename.o extension/fake_id0/chmod.o extension/fake_id0/utimensat.o extension/fake_id0/access.o extension/fake_id0/exec.o extension/fake_id0/link.o extension/fake_id0/symlink.o extension/fake_id0/mk.o extension/fake_id0/stat.o extension/fake_id0/helper_functions.o extension/fake_id0/fake_id0.o extension/hidden_files/hidden_files.o extension/mountinfo/mountinfo.o extension/port_switch/port_switch.o extension/sysvipc/sysvipc.o extension/sysvipc/sysvipc_msg.o extension/sysvipc/sysvipc_sem.o extension/sysvipc/sysvipc_shm.o extension/link2symlink/link2symlink.o extension/fix_symlink_size/fix_symlink_size.o loader/loader-wrapped.o loader/loader-info.o -L/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/sysroot/lib
-ld.lld: error: undefined symbol: talloc_parent
->>> referenced by mountinfo.c
->>>               extension/mountinfo/mountinfo.o:(mountinfo_callback)
->>> referenced by mountinfo.c
->>>               extension/mountinfo/mountinfo.o:(mountinfo_callback)
->>> referenced by fix_symlink_size.c
->>>               extension/fix_symlink_size/fix_symlink_size.o:(fix_symlink_size_callback)
->>> referenced 70 more times
+ld.lld: error: undefined symbol: talloc_enable_leak_report
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+
+ld.lld: error: undefined symbol: talloc_set_log_stderr
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+
+ld.lld: error: undefined symbol: _talloc_free
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+>>> referenced by sysvipc_sem.c
+>>>               extension/sysvipc/sysvipc_sem.o:(sysvipc_semop)
+>>> referenced 44 more times
+
+ld.lld: error: undefined symbol: talloc_strdup
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+>>> referenced by chroot.c
+>>>               extension/fake_id0/chroot.o:(handle_chroot_exit_end)
+>>> referenced 23 more times
+
+ld.lld: error: undefined symbol: talloc_set_name_const
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+>>> referenced by cli.c
+>>>               cli/cli.o:(main)
+>>> referenced by tracee.c
+>>>               tracee/tracee.o:(new_child)
+>>> referenced 6 more times
+
+ld.lld: error: undefined symbol: talloc_unlink
+>>> referenced by chroot.c
+>>>               extension/fake_id0/chroot.o:(handle_chroot_exit_end)
+>>> referenced by binding.c
+>>>               path/binding.o:(remove_binding_from_all_lists)
+>>> referenced by binding.c
+>>>               path/binding.o:(remove_binding_from_all_lists)
+>>> referenced 9 more times
+
+ld.lld: error: undefined symbol: _talloc_zero
+>>> referenced by chroot.c
+>>>               extension/fake_id0/chroot.o:(handle_chroot_exit_end)
+>>> referenced by sysvipc_shm.c
+>>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmget)
+>>> referenced by link2symlink.c
+>>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
+>>> referenced 45 more times
 
 ld.lld: error: undefined symbol: _talloc_get_type_abort
->>> referenced by mountinfo.c
->>>               extension/mountinfo/mountinfo.o:(mountinfo_callback)
+>>> referenced by getsockopt.c
+>>>               extension/fake_id0/getsockopt.o:(handle_getsockopt_exit_end)
 >>> referenced by fix_symlink_size.c
 >>>               extension/fix_symlink_size/fix_symlink_size.o:(fix_symlink_size_callback)
 >>> referenced by link2symlink.c
 >>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
 >>> referenced 54 more times
 
-ld.lld: error: undefined symbol: talloc_strdup
->>> referenced by proot.c
->>>               cli/proot.o:(pre_initialize_bindings)
->>> referenced by proot.c
->>>               cli/proot.o:(post_initialize_exe)
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_b)
->>> referenced 23 more times
-
-ld.lld: error: undefined symbol: talloc_set_name_const
->>> referenced by proot.c
->>>               cli/proot.o:(pre_initialize_bindings)
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_q)
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_w)
->>> referenced 6 more times
-
-ld.lld: error: undefined symbol: _talloc_zero_array
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_q)
->>> referenced by aoxp.c
->>>               execve/aoxp.o:(push_array_of_xpointers)
-
-ld.lld: error: undefined symbol: talloc_strndup
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_q)
->>> referenced by cli.c
->>>               cli/cli.o:(expand_front_variable)
-
-ld.lld: error: undefined symbol: talloc_autofree_context
->>> referenced by glue.c
->>>               path/glue.o:(build_glue)
->>> referenced by temp.c
->>>               path/temp.o:(get_temp_directory)
->>> referenced by temp.c
->>>               path/temp.o:(create_temp_name)
->>> referenced 4 more times
-
-ld.lld: error: undefined symbol: _talloc_set_destructor
->>> referenced by glue.c
->>>               path/glue.o:(build_glue)
->>> referenced by sysvipc_shm.c
->>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmat)
->>> referenced by sysvipc_shm.c
->>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shm_inherit_process)
->>> referenced 13 more times
-
-ld.lld: error: undefined symbol: _talloc_free
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_k)
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_0)
->>> referenced by proot.c
->>>               cli/proot.o:(handle_option_i)
->>> referenced 44 more times
-
-ld.lld: error: undefined symbol: _talloc_zero
+ld.lld: error: undefined symbol: talloc_parent
+>>> referenced by fix_symlink_size.c
+>>>               extension/fix_symlink_size/fix_symlink_size.o:(fix_symlink_size_callback)
+>>> referenced by fix_symlink_size.c
+>>>               extension/fix_symlink_size/fix_symlink_size.o:(fix_symlink_size_callback)
 >>> referenced by link2symlink.c
 >>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
->>> referenced by sysvipc_shm.c
->>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmget)
->>> referenced by sysvipc_shm.c
->>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmat)
->>> referenced 45 more times
-
-ld.lld: error: undefined symbol: talloc_check_name
->>> referenced by link2symlink.c
->>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
->>> referenced by link2symlink.c
->>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
->>> referenced by link2symlink.c
->>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
->>> referenced 3 more times
+>>> referenced 70 more times
 
 ld.lld: error: undefined symbol: talloc_get_size
 >>> referenced by sysvipc_shm.c
@@ -281,9 +259,33 @@ ld.lld: error: undefined symbol: _talloc_realloc_array
 >>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmget)
 >>> referenced by sysvipc_sem.c
 >>>               extension/sysvipc/sysvipc_sem.o:(sysvipc_semget)
->>> referenced by sysvipc_shm.c
->>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmat)
+>>> referenced by sysvipc_msg.c
+>>>               extension/sysvipc/sysvipc_msg.o:(sysvipc_msgget)
 >>> referenced 14 more times
+
+ld.lld: error: undefined symbol: talloc_check_name
+>>> referenced by link2symlink.c
+>>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
+>>> referenced by link2symlink.c
+>>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
+>>> referenced by link2symlink.c
+>>>               extension/link2symlink/link2symlink.o:(link2symlink_callback)
+>>> referenced 3 more times
+
+ld.lld: error: undefined symbol: talloc_strndup
+>>> referenced by cli.c
+>>>               cli/cli.o:(expand_front_variable)
+>>> referenced by proot.c
+>>>               cli/proot.o:(handle_option_q)
+
+ld.lld: error: undefined symbol: talloc_asprintf
+>>> referenced by cli.c
+>>>               cli/cli.o:(expand_front_variable)
+>>> referenced by temp.c
+>>>               path/temp.o:(create_temp_name)
+>>> referenced by temp.c
+>>>               path/temp.o:(create_temp_directory)
+>>> referenced 4 more times
 
 ld.lld: error: undefined symbol: _talloc_array
 >>> referenced by sysvipc_sem.c
@@ -303,6 +305,15 @@ ld.lld: error: undefined symbol: talloc_named_const
 >>>               extension/fake_id0/fake_id0.o:(fake_id0_callback)
 >>> referenced 7 more times
 
+ld.lld: error: undefined symbol: _talloc_set_destructor
+>>> referenced by sysvipc.c
+>>>               extension/sysvipc/sysvipc.o:(sysvipc_callback)
+>>> referenced by sysvipc_shm.c
+>>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shmat)
+>>> referenced by sysvipc_shm.c
+>>>               extension/sysvipc/sysvipc_shm.o:(sysvipc_shm_inherit_process)
+>>> referenced 13 more times
+
 ld.lld: error: undefined symbol: _talloc_reference_loc
 >>> referenced by sysvipc.c
 >>>               extension/sysvipc/sysvipc.o:(sysvipc_callback)
@@ -311,15 +322,6 @@ ld.lld: error: undefined symbol: _talloc_reference_loc
 >>> referenced by extension.c
 >>>               extension/extension.o:(inherit_extensions)
 >>> referenced 14 more times
-
-ld.lld: error: undefined symbol: talloc_unlink
->>> referenced by chroot.c
->>>               extension/fake_id0/chroot.o:(handle_chroot_exit_end)
->>> referenced by binding.c
->>>               path/binding.o:(remove_binding_from_all_lists)
->>> referenced by binding.c
->>>               path/binding.o:(remove_binding_from_all_lists)
->>> referenced 9 more times
 
 ld.lld: error: undefined symbol: talloc_report_depth_cb
 >>> referenced by event.c
@@ -330,10 +332,6 @@ ld.lld: error: undefined symbol: talloc_report_depth_cb
 ld.lld: error: undefined symbol: talloc_report_depth_file
 >>> referenced by event.c
 >>>               tracee/event.o:(print_talloc_hierarchy)
-
-ld.lld: error: undefined symbol: talloc_get_name
->>> referenced by event.c
->>>               tracee/event.o:(print_talloc_chunk)
 
 ld.lld: error: too many errors emitted, stopping now (use --error-limit=0 to see all errors)
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
