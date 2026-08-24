@@ -287,15 +287,30 @@ jobs:
           sudo mkdir -p "$REAL_PREFIX"
           sudo chown -R "$(whoami)" "/data"
 
+          # termux-core-package's Makefile requires
+          # TERMUX_PKGS__BUILD__REPO_ROOT_DIR pointing at a checkout of
+          # the main termux-packages monorepo (for
+          # packages/termux-core/build/scripts/termux-replace-termux-core-src-scripts).
+          # Sparse-checkout just that one path instead of the whole repo.
+          git clone --filter=blob:none --no-checkout --depth 1 \
+            https://github.com/termux/termux-packages.git build/termux-packages-repo
+          cd build/termux-packages-repo
+          git sparse-checkout set packages/termux-core
+          git checkout
+          cd "$GITHUB_WORKSPACE"
+
           git clone --depth 1 https://github.com/termux/termux-core-package.git build/termux-core-src
           cd build/termux-core-src
           make -j"$(nproc)" \
             TERMUX_APP__NAME="Thawra Alimia" \
             TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+            TERMUX_PKGS__BUILD__REPO_ROOT_DIR="$GITHUB_WORKSPACE/build/termux-packages-repo" \
             all 2>&1 | tee "$GITHUB_WORKSPACE/termux-core-build.log"
           BUILD_STATUS=${PIPESTATUS[0]}
           if [ "$BUILD_STATUS" -eq 0 ]; then
-            make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
+            make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+              TERMUX_PKGS__BUILD__REPO_ROOT_DIR="$GITHUB_WORKSPACE/build/termux-packages-repo" \
+              install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
           fi
           echo "--- what actually landed under $REAL_PREFIX ---"
           find "$REAL_PREFIX" -type f 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
