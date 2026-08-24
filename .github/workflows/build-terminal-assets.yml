@@ -217,9 +217,25 @@ jobs:
           PREFIX="$GITHUB_WORKSPACE/build/sysroot"
 
           SHMEM_FLAG=""
+          SHMEM_LDFLAG=""
           if [ -f "$PREFIX/lib/libandroid-shmem.a" ]; then
             SHMEM_FLAG="PROOT_WITH_LIBANDROID_SHMEM=1"
+            SHMEM_LDFLAG="-landroid-shmem"
           fi
+
+          # IMPORTANT: confirmed via the actual link command in a previous
+          # run's log that -ltalloc was NEVER present, despite proot's own
+          # GNUmakefile having `LDFLAGS += -ltalloc -Wl,-z,noexecstack`.
+          # Root cause: GNU Make command-line variable assignments
+          # (LDFLAGS=... passed to `make`) completely override a
+          # makefile's own `+=` for that variable rather than combining
+          # with it - so every previous LDFLAGS="-L$PREFIX/lib" silently
+          # discarded the makefile's own addition. Every earlier attempt
+          # to fix "missing talloc symbols" by changing what's IN
+          # libtalloc was chasing a red herring: it was never being
+          # linked against at all. Build the complete LDFLAGS ourselves
+          # instead of relying on += to add to it.
+          FULL_LDFLAGS="-L$PREFIX/lib -ltalloc $SHMEM_LDFLAG -Wl,-z,noexecstack"
 
           # .DEFAULT_GOAL in proot's GNUmakefile is `proot`, which already
           # pulls in the loader as an order-only prerequisite - no need to
@@ -228,7 +244,7 @@ jobs:
           make -j"$(nproc)" \
             CC="$CC" \
             CFLAGS="-O2 -I$PREFIX/include" \
-            LDFLAGS="-L$PREFIX/lib" \
+            LDFLAGS="$FULL_LDFLAGS" \
             $SHMEM_FLAG \
             V=1 2>&1 | tee "$GITHUB_WORKSPACE/proot-build.log"
           BUILD_STATUS=${PIPESTATUS[0]}
