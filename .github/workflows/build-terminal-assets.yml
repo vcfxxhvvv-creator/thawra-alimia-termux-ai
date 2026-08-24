@@ -271,6 +271,49 @@ jobs:
           git commit -m "ci: capture failed build logs [skip ci]"
           git push origin HEAD:main
 
+      - name: Build termux-core (termux-exec's header dependency)
+        id: termuxcore
+        continue-on-error: true
+        run: |
+          set +e
+          # termux-exec-package's build hardcodes include paths under
+          # /data/data/$(APP_PACKAGE)/files/usr - the real on-device
+          # runtime path, not a neutral build sysroot (this is how
+          # Termux's own build system normally works: built inside a
+          # container that already mirrors the final device layout).
+          # Create that real path on the runner and install termux-core
+          # there for real, so termux-exec's hardcoded -I path resolves.
+          REAL_PREFIX="/data/data/$APP_PACKAGE/files/usr"
+          sudo mkdir -p "$REAL_PREFIX"
+          sudo chown -R "$(whoami)" "/data"
+
+          git clone --depth 1 https://github.com/termux/termux-core-package.git build/termux-core-src
+          cd build/termux-core-src
+          make -j"$(nproc)" \
+            TERMUX_APP__NAME="Thawra Alimia" \
+            TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+            all 2>&1 | tee "$GITHUB_WORKSPACE/termux-core-build.log"
+          BUILD_STATUS=${PIPESTATUS[0]}
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
+          fi
+          echo "--- what actually landed under $REAL_PREFIX ---"
+          find "$REAL_PREFIX" -type f 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
+          set -e
+          echo "status=$BUILD_STATUS" >> "$GITHUB_OUTPUT"
+
+      - name: Save termux-core build log
+        if: always()
+        run: |
+          mkdir -p ci-debug
+          cp termux-core-build.log ci-debug/termux-core-build.log 2>/dev/null || echo "no log captured" > ci-debug/termux-core-build.log
+          git config user.email "ci@local"
+          git config user.name "terminal-assets-ci"
+          git add -f ci-debug/termux-core-build.log
+          git diff --cached --quiet && echo "no change" && exit 0
+          git commit -m "ci: capture termux-core build log [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
+
       - name: Build termux-exec
         id: termuxexec
         continue-on-error: true
@@ -278,7 +321,7 @@ jobs:
           set +e
           git clone --depth 1 https://github.com/termux/termux-exec-package.git build/termux-exec-src
           cd build/termux-exec-src
-          INSTALL_DIR="$GITHUB_WORKSPACE/build/termux-exec-install"
+          REAL_PREFIX="/data/data/$APP_PACKAGE/files/usr"
 
           make -j"$(nproc)" \
             TERMUX_APP__NAME="Thawra Alimia" \
@@ -289,10 +332,9 @@ jobs:
 
           if [ "$BUILD_STATUS" -eq 0 ]; then
             make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
-              TERMUX_EXEC_PKG__INSTALL_PREFIX="$INSTALL_DIR" \
               install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
             echo "--- install dir contents ---"
-            find "$INSTALL_DIR" -type f | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
+            find "$REAL_PREFIX" -name "*termux-exec*" -o -name "*.so" 2>/dev/null | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
           fi
           set -e
           echo "status=$BUILD_STATUS" >> "$GITHUB_OUTPUT"
@@ -315,9 +357,9 @@ jobs:
           cp build/proot-src/src/proot android/app/src/main/jniLibs/arm64-v8a/libproot.so
           cp build/sysroot/lib/libtalloc.so android/app/src/main/jniLibs/arm64-v8a/libtalloc.so
 
-          TERMUXEXEC_SO=$(find build/termux-exec-install -name "libtermux-exec.so" 2>/dev/null | head -1)
+          TERMUXEXEC_SO=$(find "/data/data/$APP_PACKAGE/files/usr" -name "libtermux-exec.so" 2>/dev/null | head -1)
           if [ -z "$TERMUXEXEC_SO" ]; then
-            TERMUXEXEC_SO=$(find build/termux-exec-install -name "*.so" 2>/dev/null | head -1)
+            TERMUXEXEC_SO=$(find "/data/data/$APP_PACKAGE/files/usr" -name "libtermux-exec*.so" 2>/dev/null | head -1)
           fi
           if [ -n "$TERMUXEXEC_SO" ]; then
             cp "$TERMUXEXEC_SO" android/app/src/main/jniLibs/arm64-v8a/libtermuxexec.so
