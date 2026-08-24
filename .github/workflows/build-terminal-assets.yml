@@ -126,7 +126,19 @@ jobs:
             --disable-rpath --disable-python \
             --cross-compile --cross-answers=cross-answers.txt
 
-          make -j"$(nproc)"
+          make -j"$(nproc)" 2>&1 | tee "$GITHUB_WORKSPACE/talloc-build.log"
+
+          {
+            echo "=== DEBUG: full tree after make ==="
+            find . -type f \( -name "*.o" -o -name "*.a" -o -name "*.so*" \) | sort
+            TALLOC_O=$(find . -name "talloc.o" | head -1)
+            if [ -n "$TALLOC_O" ]; then
+              echo "=== DEBUG: nm on $TALLOC_O ==="
+              llvm-nm "$TALLOC_O" 2>&1 | grep -i "talloc_set_destructor\|talloc_report_depth" || echo "those symbols NOT in $TALLOC_O"
+            else
+              echo "talloc.o not found ANYWHERE under $(pwd)"
+            fi
+          } | tee -a "$GITHUB_WORKSPACE/talloc-build.log"
 
           # Archive every .o waf produced (not just a narrow talloc*.o
           # glob in bin/default/ - that missed several object files in
@@ -224,10 +236,11 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           mkdir -p ci-debug
           cp proot-build.log ci-debug/proot-build.log 2>/dev/null || echo "no log captured" > ci-debug/proot-build.log
+          cp talloc-build.log ci-debug/talloc-build.log 2>/dev/null || echo "no log captured" > ci-debug/talloc-build.log
           git config user.email "ci@local"
           git config user.name "terminal-assets-ci"
-          git add -f ci-debug/proot-build.log
-          git commit -m "ci: capture failed proot build log [skip ci]"
+          git add -f ci-debug/proot-build.log ci-debug/talloc-build.log
+          git commit -m "ci: capture failed build logs [skip ci]"
           git push origin HEAD:main
 
       - name: Collect proot into jniLibs
