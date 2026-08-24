@@ -69,36 +69,359 @@ Proceeding without mode-specific .env
 
 > Task :expo-constants:preBuild
 > Task :expo-constants:preDebugBuild
-> Task :expo-constants:writeDebugAarMetadata
 > Task :expo-file-system:preBuild UP-TO-DATE
 > Task :expo-file-system:preDebugBuild UP-TO-DATE
+> Task :expo-constants:writeDebugAarMetadata
 > Task :expo-font:preBuild UP-TO-DATE
 > Task :expo-font:preDebugBuild UP-TO-DATE
 > Task :expo-file-system:writeDebugAarMetadata
 > Task :expo-keep-awake:preBuild UP-TO-DATE
+> Task :expo-font:writeDebugAarMetadata
 > Task :expo-keep-awake:preDebugBuild UP-TO-DATE
 > Task :expo-modules-core:preBuild UP-TO-DATE
 > Task :expo-modules-core:preDebugBuild UP-TO-DATE
-> Task :expo-font:writeDebugAarMetadata
 > Task :expo-keep-awake:writeDebugAarMetadata
 > Task :expo-modules-core:writeDebugAarMetadata
 > Task :app:generateDebugResValues
-> Task :app:checkDebugAarMetadata FAILED
+> Task :expo:generateDebugResValues
+> Task :expo:generateDebugResources
+> Task :app:checkDebugAarMetadata
+> Task :expo:packageDebugResources
+> Task :expo-asset:generateDebugResValues
+> Task :expo-asset:generateDebugResources
+> Task :expo-asset:packageDebugResources
+> Task :expo-constants:generateDebugResValues
+> Task :expo-constants:generateDebugResources
+> Task :expo-constants:packageDebugResources
+> Task :expo-file-system:generateDebugResValues
+> Task :expo-file-system:generateDebugResources
+> Task :expo-file-system:packageDebugResources
+> Task :expo-font:generateDebugResValues
+> Task :expo-font:generateDebugResources
+> Task :expo-font:packageDebugResources
+> Task :expo-keep-awake:generateDebugResValues
+> Task :expo-keep-awake:generateDebugResources
+> Task :expo-keep-awake:packageDebugResources
+> Task :expo-modules-core:generateDebugResValues
+> Task :expo-modules-core:generateDebugResources
+> Task :expo-modules-core:packageDebugResources
+> Task :app:mapDebugSourceSetPaths
+> Task :app:generateDebugResources
+> Task :app:packageDebugResources
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :expo:extractDeepLinksDebug
+> Task :expo-asset:extractDeepLinksDebug
+> Task :app:parseDebugLocalResources
+> Task :expo-constants:extractDeepLinksDebug
+> Task :expo:processDebugManifest
+> Task :expo-constants:processDebugManifest
+> Task :expo-asset:processDebugManifest
+> Task :expo-file-system:extractDeepLinksDebug
+> Task :expo-font:extractDeepLinksDebug
+> Task :expo-font:processDebugManifest
+> Task :expo-keep-awake:extractDeepLinksDebug
 
-FAILURE: Build failed with an exception.
+> Task :expo-file-system:processDebugManifest
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-file-system/android/src/main/AndroidManifest.xml:6:9-8:20 Warning:
+	provider#expo.modules.filesystem.FileSystemFileProvider@android:authorities was tagged at AndroidManifest.xml:6 to replace other declarations but no other declaration present
 
-* What went wrong:
-Execution failed for task ':app:checkDebugAarMetadata'.
-> Could not resolve all files for configuration ':app:debugRuntimeClasspath'.
-   > Failed to transform hermes-android-0.74.5-debug.aar (com.facebook.react:hermes-android:0.74.5) to match attributes {artifactType=android-aar-metadata, com.android.build.api.attributes.BuildTypeAttr=debug, org.gradle.category=library, org.gradle.dependency.bundling=external, org.gradle.libraryelements=aar, org.gradle.status=release, org.gradle.usage=java-runtime}.
-      > Execution failed for JetifyTransform: /home/runner/.gradle/caches/modules-2/files-2.1/com.facebook.react/hermes-android/0.74.5/4a63197b126d87896de19fcd6b472ff7dbe02403/hermes-android-0.74.5-debug.aar.
-         > Java heap space
+> Task :app:mergeDebugResources
+> Task :expo-modules-core:extractDeepLinksDebug
+> Task :expo-keep-awake:processDebugManifest
 
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-> Get more help at https://help.gradle.org.
+> Task :expo-modules-core:processDebugManifest
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/AndroidManifest.xml:8:9-11:45 Warning:
+	meta-data#com.facebook.soloader.enabled@android:value was tagged at AndroidManifest.xml:8 to replace other declarations but no other declaration present
 
-BUILD FAILED in 2m 26s
-24 actionable tasks: 24 executed
+> Task :expo:compileDebugLibraryResources
+
+> Task :app:processDebugMainManifest
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/android/app/src/debug/AndroidManifest.xml:6:5-162 Warning:
+	application@android:usesCleartextTraffic was tagged at AndroidManifest.xml:6 to replace other declarations but no other declaration present
+/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/android/app/src/debug/AndroidManifest.xml Warning:
+	provider#expo.modules.filesystem.FileSystemFileProvider@android:authorities was tagged at AndroidManifest.xml:0 to replace other declarations but no other declaration present
+
+> Task :app:processDebugManifest
+> Task :expo-asset:compileDebugLibraryResources
+> Task :expo:parseDebugLocalResources
+> Task :expo-constants:compileDebugLibraryResources
+> Task :app:processDebugManifestForPackage
+> Task :expo-asset:parseDebugLocalResources
+> Task :expo-constants:parseDebugLocalResources
+> Task :expo-file-system:compileDebugLibraryResources
+> Task :expo:generateDebugRFile
+> Task :expo-asset:generateDebugRFile
+> Task :expo-constants:generateDebugRFile
+> Task :expo-file-system:parseDebugLocalResources
+> Task :expo-font:compileDebugLibraryResources
+> Task :expo-file-system:generateDebugRFile
+> Task :expo-font:parseDebugLocalResources
+> Task :expo-keep-awake:compileDebugLibraryResources
+> Task :expo-keep-awake:parseDebugLocalResources
+> Task :expo-font:generateDebugRFile
+> Task :expo-modules-core:compileDebugLibraryResources
+> Task :expo:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-keep-awake:generateDebugRFile
+> Task :expo:generateDebugBuildConfig
+> Task :expo-asset:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-modules-core:parseDebugLocalResources
+> Task :expo-asset:generateDebugBuildConfig
+> Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-modules-core:generateDebugRFile
+> Task :expo-modules-core:generateDebugBuildConfig
+> Task :app:processDebugResources
+> Task :expo-modules-core:javaPreCompileDebug
+> Task :expo-constants:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-asset:javaPreCompileDebug
+> Task :expo-constants:generateDebugBuildConfig
+> Task :expo-file-system:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-constants:javaPreCompileDebug
+> Task :expo-file-system:generateDebugBuildConfig
+> Task :expo-font:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-file-system:javaPreCompileDebug
+> Task :expo-font:generateDebugBuildConfig
+> Task :expo-keep-awake:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-font:javaPreCompileDebug
+> Task :expo-keep-awake:generateDebugBuildConfig
+> Task :expo-keep-awake:javaPreCompileDebug
+> Task :expo:javaPreCompileDebug
+> Task :app:javaPreCompileDebug
+> Task :app:mergeDebugShaders
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :expo:mergeDebugShaders
+> Task :expo:compileDebugShaders NO-SOURCE
+> Task :expo:generateDebugAssets UP-TO-DATE
+> Task :expo:packageDebugAssets
+> Task :expo-asset:mergeDebugShaders
+> Task :expo-asset:compileDebugShaders NO-SOURCE
+> Task :expo-asset:generateDebugAssets UP-TO-DATE
+> Task :expo-asset:packageDebugAssets
+> Task :expo-constants:mergeDebugShaders
+> Task :expo-constants:compileDebugShaders NO-SOURCE
+> Task :expo-constants:generateDebugAssets UP-TO-DATE
+> Task :expo-constants:packageDebugAssets
+> Task :expo-file-system:mergeDebugShaders
+> Task :expo-file-system:compileDebugShaders NO-SOURCE
+> Task :expo-file-system:generateDebugAssets UP-TO-DATE
+> Task :expo-file-system:packageDebugAssets
+> Task :expo-font:mergeDebugShaders
+> Task :expo-font:compileDebugShaders NO-SOURCE
+> Task :expo-font:generateDebugAssets UP-TO-DATE
+> Task :expo-font:packageDebugAssets
+> Task :expo-keep-awake:mergeDebugShaders
+> Task :expo-keep-awake:compileDebugShaders NO-SOURCE
+> Task :expo-keep-awake:generateDebugAssets UP-TO-DATE
+> Task :expo-keep-awake:packageDebugAssets
+> Task :expo-modules-core:mergeDebugShaders
+> Task :expo-modules-core:compileDebugShaders NO-SOURCE
+> Task :expo-modules-core:generateDebugAssets UP-TO-DATE
+> Task :expo-modules-core:packageDebugAssets
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:desugarDebugFileDependencies
+> Task :app:mergeDebugJniLibFolders
+> Task :expo:mergeDebugJniLibFolders
+> Task :expo:mergeDebugNativeLibs NO-SOURCE
+> Task :app:checkDebugDuplicateClasses
+> Task :expo:copyDebugJniLibsProjectOnly
+> Task :expo-modules-core:compileDebugKotlin
+> Task :app:mergeExtDexDebug
+
+> Task :expo-modules-core:compileDebugKotlin
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt:20:26 'Promise' is deprecated. AsyncFunction will crash when called. Use expo.modules.kotlin.Promise instead
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt:63:51 'Promise' is deprecated. AsyncFunction will crash when called. Use expo.modules.kotlin.Promise instead
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt:90:54 'Promise' is deprecated. AsyncFunction will crash when called. Use expo.modules.kotlin.Promise instead
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/defaultmodules/CoreModule.kt:6:34 'ReactFeatureFlags' is deprecated. Deprecated in Java
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/defaultmodules/CoreModule.kt:70:12 'ReactFeatureFlags' is deprecated. Deprecated in Java
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/events/KModuleEventEmitterWrapper.kt:97:7 'constructor Event<T : Event<(raw) Event<*>>!>(Int)' is deprecated. Deprecated in Java
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/types/JSTypeConverterHelper.kt:44:17 'get(String!): Any?' is deprecated. Deprecated in Java
+
+> Task :expo-modules-core:compileDebugJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :expo-modules-core:processDebugJavaRes
+> Task :expo-asset:mergeDebugJniLibFolders
+> Task :expo-asset:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-asset:copyDebugJniLibsProjectOnly
+> Task :expo-constants:mergeDebugJniLibFolders
+> Task :expo-constants:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-constants:copyDebugJniLibsProjectOnly
+> Task :expo-file-system:mergeDebugJniLibFolders
+> Task :expo-file-system:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-file-system:copyDebugJniLibsProjectOnly
+> Task :expo-font:mergeDebugJniLibFolders
+> Task :expo-font:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-font:copyDebugJniLibsProjectOnly
+> Task :expo-keep-awake:mergeDebugJniLibFolders
+> Task :expo-keep-awake:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-keep-awake:copyDebugJniLibsProjectOnly
+> Task :expo-modules-core:bundleLibRuntimeToJarDebug
+> Task :expo-modules-core:bundleLibCompileToJarDebug
+
+> Task :expo-modules-core:configureCMakeDebug[arm64-v8a]
+Checking the license for package CMake 3.22.1 in /usr/local/lib/android/sdk/licenses
+License for package CMake 3.22.1 accepted.
+Preparing "Install CMake 3.22.1 v.3.22.1".
+"Install CMake 3.22.1 v.3.22.1" ready.
+Installing CMake 3.22.1 in /usr/local/lib/android/sdk/cmake/3.22.1
+"Install CMake 3.22.1 v.3.22.1" complete.
+"Install CMake 3.22.1 v.3.22.1" finished.
+
+> Task :expo-constants:compileDebugKotlin
+> Task :expo-asset:compileDebugKotlin
+> Task :expo-constants:compileDebugJavaWithJavac
+> Task :expo-asset:compileDebugJavaWithJavac
+> Task :expo-asset:bundleLibCompileToJarDebug
+> Task :expo-constants:bundleLibCompileToJarDebug
+> Task :expo-asset:bundleLibRuntimeToJarDebug
+> Task :expo-constants:bundleLibRuntimeToJarDebug
+> Task :expo-asset:processDebugJavaRes
+> Task :expo-constants:processDebugJavaRes
+> Task :expo-font:compileDebugKotlin
+> Task :expo-keep-awake:compileDebugKotlin
+> Task :expo-file-system:compileDebugKotlin
+> Task :expo-modules-core:buildCMakeDebug[arm64-v8a]
+> Task :expo-file-system:compileDebugJavaWithJavac
+> Task :expo-file-system:bundleLibCompileToJarDebug
+> Task :expo-font:compileDebugJavaWithJavac
+> Task :expo-font:bundleLibCompileToJarDebug
+> Task :expo-keep-awake:compileDebugJavaWithJavac
+> Task :expo-keep-awake:bundleLibCompileToJarDebug
+> Task :expo-file-system:bundleLibRuntimeToJarDebug
+> Task :expo-font:bundleLibRuntimeToJarDebug
+> Task :expo-keep-awake:bundleLibRuntimeToJarDebug
+> Task :expo-file-system:processDebugJavaRes
+> Task :expo-font:processDebugJavaRes
+> Task :expo-keep-awake:processDebugJavaRes
+> Task :expo-modules-core:configureCMakeDebug[armeabi-v7a]
+
+> Task :expo:compileDebugKotlin
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:20:34 'ReactFeatureFlags' is deprecated. Deprecated in Java
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:153:11 'ReactFeatureFlags' is deprecated. Deprecated in Java
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:161:34 'constructor ReactDelegate(Activity!, ReactNativeHost!, String?, Bundle?)' is deprecated. Deprecated in Java
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:231:10 'ReactFeatureFlags' is deprecated. Deprecated in Java
+
+> Task :expo-modules-core:buildCMakeDebug[armeabi-v7a]
+> Task :expo:compileDebugJavaWithJavac
+> Task :expo:bundleLibCompileToJarDebug
+> Task :expo:bundleLibRuntimeToJarDebug
+> Task :expo:processDebugJavaRes
+> Task :expo-modules-core:configureCMakeDebug[x86]
+> Task :app:mergeLibDexDebug
+
+> Task :app:compileDebugKotlin
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/android/app/src/main/java/com/thawra/termux/ai/terminal/TerminalModule.kt:54:21 Parameter 'eventName' is never used
+w: file:///home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/android/app/src/main/java/com/thawra/termux/ai/terminal/TerminalModule.kt:57:25 Parameter 'count' is never used
+
+> Task :expo-modules-core:buildCMakeDebug[x86]
+> Task :app:compileDebugJavaWithJavac
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics
+> Task :app:processDebugJavaRes
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
+> Task :expo-modules-core:configureCMakeDebug[x86_64]
+> Task :expo-modules-core:buildCMakeDebug[x86_64]
+> Task :expo-modules-core:mergeDebugJniLibFolders
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :expo:stripDebugDebugSymbols NO-SOURCE
+> Task :expo:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-modules-core:mergeDebugNativeLibs
+> Task :expo:extractDebugAnnotations
+> Task :expo:extractDeepLinksForAarDebug
+> Task :expo:mergeDebugGeneratedProguardFiles
+> Task :expo:mergeDebugConsumerProguardFiles
+> Task :expo:prepareDebugArtProfile
+> Task :expo-modules-core:copyDebugJniLibsProjectOnly
+> Task :expo:prepareLintJarForPublish
+> Task :expo-asset:stripDebugDebugSymbols NO-SOURCE
+> Task :expo:mergeDebugJavaResource
+> Task :expo-asset:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-asset:extractDebugAnnotations
+> Task :expo:syncDebugLibJars
+> Task :expo:bundleDebugAar
+> Task :expo:assembleDebug
+> Task :expo-asset:extractDeepLinksForAarDebug
+> Task :expo-asset:mergeDebugGeneratedProguardFiles
+> Task :expo-asset:mergeDebugConsumerProguardFiles
+> Task :expo-asset:prepareDebugArtProfile
+> Task :expo-asset:prepareLintJarForPublish
+> Task :expo-constants:stripDebugDebugSymbols NO-SOURCE
+> Task :expo-asset:mergeDebugJavaResource
+> Task :expo-constants:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-constants:extractDebugAnnotations
+> Task :expo-asset:syncDebugLibJars
+> Task :expo-asset:bundleDebugAar
+> Task :expo-asset:assembleDebug
+> Task :expo-constants:extractDeepLinksForAarDebug
+> Task :expo-constants:mergeDebugGeneratedProguardFiles
+> Task :expo-constants:mergeDebugConsumerProguardFiles
+> Task :expo-constants:prepareDebugArtProfile
+> Task :expo-constants:prepareLintJarForPublish
+> Task :expo-file-system:stripDebugDebugSymbols NO-SOURCE
+> Task :expo-constants:mergeDebugJavaResource
+> Task :expo-file-system:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-constants:syncDebugLibJars
+> Task :expo-constants:bundleDebugAar
+> Task :expo-constants:assembleDebug
+> Task :expo-file-system:extractDebugAnnotations
+> Task :expo-file-system:extractDeepLinksForAarDebug
+> Task :expo-file-system:mergeDebugGeneratedProguardFiles
+> Task :expo-file-system:mergeDebugConsumerProguardFiles
+> Task :expo-file-system:prepareDebugArtProfile
+> Task :expo-file-system:prepareLintJarForPublish
+> Task :expo-file-system:mergeDebugJavaResource
+> Task :expo-font:stripDebugDebugSymbols NO-SOURCE
+> Task :expo-file-system:syncDebugLibJars
+> Task :expo-file-system:bundleDebugAar
+> Task :expo-file-system:assembleDebug
+> Task :expo-font:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-font:extractDebugAnnotations
+> Task :expo-font:extractDeepLinksForAarDebug
+> Task :expo-font:mergeDebugGeneratedProguardFiles
+> Task :expo-font:mergeDebugConsumerProguardFiles
+> Task :expo-font:prepareDebugArtProfile
+> Task :expo-font:prepareLintJarForPublish
+> Task :expo-keep-awake:stripDebugDebugSymbols NO-SOURCE
+> Task :expo-keep-awake:copyDebugJniLibsProjectAndLocalJars
+> Task :expo-font:mergeDebugJavaResource
+> Task :expo-keep-awake:extractDebugAnnotations
+> Task :expo-font:syncDebugLibJars
+> Task :expo-font:bundleDebugAar
+> Task :expo-font:assembleDebug
+> Task :expo-keep-awake:extractDeepLinksForAarDebug
+> Task :expo-keep-awake:mergeDebugGeneratedProguardFiles
+> Task :expo-keep-awake:mergeDebugConsumerProguardFiles
+> Task :expo-keep-awake:prepareDebugArtProfile
+> Task :expo-keep-awake:prepareLintJarForPublish
+> Task :app:mergeDebugNativeLibs
+> Task :expo-keep-awake:mergeDebugJavaResource
+> Task :expo-keep-awake:syncDebugLibJars
+> Task :expo-keep-awake:bundleDebugAar
+> Task :expo-keep-awake:assembleDebug
+> Task :expo-modules-core:extractDebugAnnotations
+> Task :expo-modules-core:extractDeepLinksForAarDebug
+> Task :expo-modules-core:mergeDebugGeneratedProguardFiles
+> Task :expo-modules-core:mergeDebugConsumerProguardFiles
+> Task :expo-modules-core:prepareDebugArtProfile
+> Task :expo-modules-core:prepareLintJarForPublish
+> Task :expo-modules-core:mergeDebugJavaResource
+> Task :expo-modules-core:stripDebugDebugSymbols
+> Task :expo-modules-core:syncDebugLibJars
+> Task :expo-modules-core:copyDebugJniLibsProjectAndLocalJars
+> Task :app:stripDebugDebugSymbols
+> Task :expo-modules-core:bundleDebugAar
+> Task :expo-modules-core:assembleDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+
+BUILD SUCCESSFUL in 6m 3s
+270 actionable tasks: 270 executed
