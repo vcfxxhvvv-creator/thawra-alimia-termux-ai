@@ -67,9 +67,11 @@ class TerminalModule(reactContext: ReactApplicationContext) :
     fun checkPrerequisites(promise: Promise) {
         val prootBin = File(nativeLibDir, "libproot.so")
         val execShim = File(nativeLibDir, "libtermuxexec.so")
+        val tallocLib = File(nativeLibDir, "libtalloc.so")
         val result = com.facebook.react.bridge.Arguments.createMap()
         result.putBoolean("prootFound", prootBin.exists())
         result.putBoolean("termuxExecFound", execShim.exists())
+        result.putBoolean("tallocFound", tallocLib.exists())
         result.putString("nativeLibDir", nativeLibDir)
         result.putString("abi", android.os.Build.SUPPORTED_ABIS.firstOrNull() ?: "unknown")
         promise.resolve(result)
@@ -139,6 +141,9 @@ class TerminalModule(reactContext: ReactApplicationContext) :
 
                 val pb = ProcessBuilder(cmd)
                 pb.environment()["PROOT_TMP_DIR"] = tmp.absolutePath
+                // libtalloc.so ships as a jniLib next to libproot.so (proot
+                // links against it dynamically) - point its linker there.
+                pb.environment()["LD_LIBRARY_PATH"] = nativeLibDir
                 if (execFile.exists()) {
                     pb.environment()["LD_PRELOAD"] = ldPreload
                 } else {

@@ -128,52 +128,40 @@ jobs:
 
           make -j"$(nproc)" 2>&1 | tee "$GITHUB_WORKSPACE/talloc-build.log"
 
-          # waf compiles talloc.c more than once (talloc.c.5.o, talloc.c.6.o -
-          # one for libtalloc.so, one likely for the talloc_testsuite binary),
-          # and blanket-archiving every .o (including test-only ones) lost
-          # symbols somewhere rather than gaining them. Be precise instead:
-          # for any duplicate talloc.c.N.o candidates, keep only ones that
-          # actually define a symbol we know must be present (used as a
-          # canary since it was one of the ones reported missing), and
-          # unconditionally skip anything under a tests/ path or named
-          # testsuite*/test_*.
-          {
-            echo "=== selecting object files for libtalloc.a ==="
-            mkdir -p "$PREFIX/lib" "$PREFIX/include"
-            SELECTED=()
-            while IFS= read -r -d '' obj; do
-              case "$obj" in
-                */tests/*|*/testsuite*|*/test_*) 
-                  echo "skip (test file): $obj"
-                  continue
-                  ;;
-              esac
-              if [[ "$obj" == *talloc.c.*.o ]]; then
-                if llvm-nm "$obj" 2>/dev/null | grep -q " T talloc_report_depth_cb$"; then
-                  echo "keep (has canary symbol): $obj"
-                  SELECTED+=("$obj")
-                else
-                  echo "skip (missing canary symbol): $obj"
-                fi
-              else
-                echo "keep (non-talloc.c support object): $obj"
-                SELECTED+=("$obj")
-              fi
-            done < <(find . -name "*.o" -print0)
+          # Static reconstruction from waf's fragmented, duplicated .o
+          # outputs proved unreliable across several attempts (verified-
+          # correct object selection still left proot's link short of
+          # symbols, a different set each time). waf already builds a
+          # complete, working libtalloc.so every run without any of this
+          # guessing - use that directly via dynamic linking instead.
+          # (TerminalModule.kt sets LD_LIBRARY_PATH at runtime so proot's
+          # dynamic linker can find it next to the other jniLibs.)
+          mkdir -p "$PREFIX/lib" "$PREFIX/include"
+          SOFILE=$(find . -name "libtalloc.so" | head -1)
+          if [ -z "$SOFILE" ]; then
+            echo "ERROR: waf did not produce libtalloc.so"
+            exit 1
+          fi
+          cp "$SOFILE" "$PREFIX/lib/libtalloc.so"
 
-            if [ ${#SELECTED[@]} -eq 0 ]; then
-              echo "ERROR: no object file with the canary symbol was found"
-              exit 1
-            fi
-            "$AR" rcs "$PREFIX/lib/libtalloc.a" "${SELECTED[@]}"
-            echo "--- final archive contents ---"
-            "$AR" t "$PREFIX/lib/libtalloc.a"
-            echo "--- verifying canary symbol is resolvable in the archive ---"
-            llvm-nm "$PREFIX/lib/libtalloc.a" | grep -B2 " T talloc_report_depth_cb$"
-          } | tee -a "$GITHUB_WORKSPACE/talloc-build.log"
+          echo "--- soname before patch ---"
+          llvm-readelf -d "$PREFIX/lib/libtalloc.so" | grep -i soname || echo "(no SONAME entry)"
+          # Android's jniLibs packaging requires the literal filename
+          # lib*.so - a versioned soname (e.g. libtalloc.so.2, which is
+          # typical for samba/talloc releases) wouldn't qualify, and would
+          # also mean proot's own DT_NEEDED wouldn't match our jniLib
+          # filename at runtime. Force it to plain libtalloc.so before
+          # proot links against it, so both sides agree.
+          which patchelf || (sudo apt-get update -qq && sudo apt-get install -y -qq patchelf)
+          patchelf --set-soname libtalloc.so "$PREFIX/lib/libtalloc.so"
+          echo "--- soname after patch ---"
+          llvm-readelf -d "$PREFIX/lib/libtalloc.so" | grep -i soname
+
+          echo "--- verifying canary symbol is present in the .so ---"
+          llvm-nm -D "$PREFIX/lib/libtalloc.so" | grep " T talloc_report_depth_cb$"
 
           find "$GITHUB_WORKSPACE/build/talloc" -maxdepth 1 -name "talloc.h" -exec cp {} "$PREFIX/include/" \;
-          echo "talloc built: $(ls -la $PREFIX/lib/libtalloc.a)"
+          echo "talloc built: $(ls -la $PREFIX/lib/libtalloc.so)"
 
       # ---------------------------------------------------------------
       # libandroid-shmem: optional (PROOT_WITH_LIBANDROID_SHMEM). Best
@@ -271,9 +259,12 @@ jobs:
         run: |
           mkdir -p android/app/src/main/jniLibs/arm64-v8a
           cp build/proot-src/src/proot android/app/src/main/jniLibs/arm64-v8a/libproot.so
-          chmod +x android/app/src/main/jniLibs/arm64-v8a/libproot.so
+          cp build/sysroot/lib/libtalloc.so android/app/src/main/jniLibs/arm64-v8a/libtalloc.so
+          chmod +x android/app/src/main/jniLibs/arm64-v8a/*.so
           echo "--- jniLibs/arm64-v8a ---"
           ls -la android/app/src/main/jniLibs/arm64-v8a/
+          echo "--- proot's dynamic dependencies ---"
+          llvm-readelf -d android/app/src/main/jniLibs/arm64-v8a/libproot.so | grep -i needed
 
       # ---------------------------------------------------------------
       # Alpine minirootfs: official, unmodified, from alpinelinux.org.
