@@ -271,11 +271,61 @@ jobs:
           git commit -m "ci: capture failed build logs [skip ci]"
           git push origin HEAD:main
 
+      - name: Build termux-exec
+        id: termuxexec
+        continue-on-error: true
+        run: |
+          set +e
+          git clone --depth 1 https://github.com/termux/termux-exec-package.git build/termux-exec-src
+          cd build/termux-exec-src
+          INSTALL_DIR="$GITHUB_WORKSPACE/build/termux-exec-install"
+
+          make -j"$(nproc)" \
+            TERMUX_APP__NAME="Thawra Alimia" \
+            TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+            all 2>&1 | tee "$GITHUB_WORKSPACE/termux-exec-build.log"
+          BUILD_STATUS=${PIPESTATUS[0]}
+          echo "termux-exec build status: $BUILD_STATUS"
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+              TERMUX_EXEC_PKG__INSTALL_PREFIX="$INSTALL_DIR" \
+              install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
+            echo "--- install dir contents ---"
+            find "$INSTALL_DIR" -type f | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
+          fi
+          set -e
+          echo "status=$BUILD_STATUS" >> "$GITHUB_OUTPUT"
+
+      - name: Save termux-exec build log
+        if: always()
+        run: |
+          mkdir -p ci-debug
+          cp termux-exec-build.log ci-debug/termux-exec-build.log 2>/dev/null || echo "no log captured" > ci-debug/termux-exec-build.log
+          git config user.email "ci@local"
+          git config user.name "terminal-assets-ci"
+          git add -f ci-debug/termux-exec-build.log
+          git diff --cached --quiet && echo "no change" && exit 0
+          git commit -m "ci: capture termux-exec build log [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
+
       - name: Collect proot into jniLibs
         run: |
           mkdir -p android/app/src/main/jniLibs/arm64-v8a
           cp build/proot-src/src/proot android/app/src/main/jniLibs/arm64-v8a/libproot.so
           cp build/sysroot/lib/libtalloc.so android/app/src/main/jniLibs/arm64-v8a/libtalloc.so
+
+          TERMUXEXEC_SO=$(find build/termux-exec-install -name "libtermux-exec.so" 2>/dev/null | head -1)
+          if [ -z "$TERMUXEXEC_SO" ]; then
+            TERMUXEXEC_SO=$(find build/termux-exec-install -name "*.so" 2>/dev/null | head -1)
+          fi
+          if [ -n "$TERMUXEXEC_SO" ]; then
+            cp "$TERMUXEXEC_SO" android/app/src/main/jniLibs/arm64-v8a/libtermuxexec.so
+            echo "bundled termux-exec from: $TERMUXEXEC_SO"
+          else
+            echo "termux-exec build did not produce a usable .so - shipping without it (TerminalModule already degrades gracefully)"
+          fi
+
           chmod +x android/app/src/main/jniLibs/arm64-v8a/*.so
           echo "--- jniLibs/arm64-v8a ---"
           ls -la android/app/src/main/jniLibs/arm64-v8a/
