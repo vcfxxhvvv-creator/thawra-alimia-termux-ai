@@ -1,0 +1,20 @@
+rm -rf build/output
+termux-exec-package: Building termux-exec-package
+
+termux-exec-package: Building lib/termux-exec_nos_c_tre
+
+termux-exec-package: Building lib/termux-exec_nos_c/tre/lib/*.o
+for source_file in lib/termux-exec_nos_c/tre/src/TermuxExecLibraryConfig.c lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/TermuxExecLDPreload.c lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/direct/exec/ExecIntercept.c lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/direct/exec/ExecVariantsIntercept.c lib/termux-exec_nos_c/tre/src/termux/os/process/termux_exec/TermuxExecProcess.c lib/termux-exec_nos_c/tre/src/termux/shell/command/environment/termux_exec/TermuxExecShellEnvironment.c; do \
+	mkdir -p "$(dirname "build/output/tmp/$source_file")" || exit $?; \
+	/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang -c  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" \
+		-DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" \
+		-DLIBTERMUX_EXEC__NOS__C__EXECVE_CALL__CHECK_ARGV0_BUFFER_OVERFLOW=0 \
+		-fPIC -fvisibility=default \
+		-o build/output/tmp/"$(echo "$source_file" | sed -E "s/(.*)\.c$/\1.o/")" \
+		"$source_file" || exit $?; \
+done
+lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/TermuxExecLDPreload.c:14:10: fatal error: 'termux/termux_core__nos__c/v1/android/shell/command/environment/AndroidShellEnvironment.h' file not found
+   14 | #include <termux/termux_core__nos__c/v1/android/shell/command/environment/AndroidShellEnvironment.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+make: *** [Makefile:293: build-libtermux-exec_nos_c_tre] Error 1
