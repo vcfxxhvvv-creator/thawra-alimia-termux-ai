@@ -1,0 +1,148 @@
+PYTHONHASHSEED=1 WAF_MAKE=1  `PATH=buildtools/bin:../../buildtools/bin:$PATH which waf` build
+Waf: Entering directory `/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/talloc/bin/default'
+Checking project rules ...
+Project rules pass
+[1/2] Creating bin/default/lib/replace/replace.empty.c
+[2/2] Compiling talloc.pc.in
+[3/4] Compiling lib/replace/closefrom.c
+[4/4] Compiling lib/replace/replace.c
+[5/6] Compiling lib/replace/closefrom.c
+[6/6] Compiling lib/replace/replace.c
+[ 7/22] Compiling talloc.c
+[ 8/22] Compiling lib/replace/tests/strptime.c
+[ 9/22] Compiling lib/replace/tests/getifaddrs.c
+[10/22] Compiling lib/replace/tests/testsuite.c
+[11/22] Compiling lib/replace/tests/os2_delete.c
+[12/22] Compiling lib/replace/tests/main.c
+[13/22] Compiling testsuite_main.c
+[14/22] Compiling testsuite.c
+[15/22] Compiling test_magic_differs_helper.c
+[16/22] Linking bin/default/libtalloc.so
+[17/22] Compiling bin/default/lib/replace/replace.empty.c
+[18/22] Compiling talloc.c
+[19/22] Linking bin/default/talloc_test_magic_differs_helper
+[20/22] Linking bin/default/lib/replace/replace_testsuite
+../../testsuite.c:1334:6: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+ 1334 |         p = talloc_autofree_context();
+      |             ^
+../../talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+ 1084 | _PUBLIC_ void *talloc_autofree_context(void) _DEPRECATED_;
+      |                                              ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1337:6: warning: 'talloc_autofree_context' is deprecated [-Wdeprecated-declarations]
+ 1337 |         p = talloc_autofree_context();
+      |             ^
+../../talloc.h:1084:46: note: 'talloc_autofree_context' has been explicitly marked deprecated here
+ 1084 | _PUBLIC_ void *talloc_autofree_context(void) _DEPRECATED_;
+      |                                              ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1680:29: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1680 |         torture_assert("memlimit", talloc_set_memlimit(l1, 2048) == 0,
+      |                                    ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1740:29: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1740 |         torture_assert("memlimit", talloc_set_memlimit(l3, 1024) == 0,
+      |                                    ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1753:29: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1753 |         torture_assert("memlimit", talloc_set_memlimit(l4, 512) == 0,
+      |                                    ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1787:29: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1787 |         torture_assert("memlimit", talloc_set_memlimit(l4, 512) == 0,
+      |                                    ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1820:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1820 |         talloc_set_memlimit(pool, 10*1024);
+      |         ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1873:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1873 |         talloc_set_memlimit(pool, 11*1024);
+      |         ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1885:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1885 |         talloc_set_memlimit(pool, 21*1024);
+      |         ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1923:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1923 |         talloc_set_memlimit(pool, 1024);
+      |         ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+../../testsuite.c:1944:2: warning: 'talloc_set_memlimit' is deprecated [-Wdeprecated-declarations]
+ 1944 |         talloc_set_memlimit(pool, 10*1024);
+      |         ^
+../../talloc.h:1951:68: note: 'talloc_set_memlimit' has been explicitly marked deprecated here
+ 1951 | _PUBLIC_ int talloc_set_memlimit(const void *ctx, size_t max_size) _DEPRECATED_;
+      |                                                                    ^
+../../lib/replace/replace.h:465:38: note: expanded from macro '_DEPRECATED_'
+  465 | #define _DEPRECATED_ __attribute__ ((deprecated))
+      |                                      ^
+11 warnings generated.
+
+[21/22] Linking bin/default/talloc_testsuite
+[22/22] Symlinking bin/default/libtalloc.so
+Waf: Leaving directory `/home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/talloc/bin/default'
+Build commands will be stored in bin/default/compile_commands.json
+'build' finished successfully (0.426s)
+=== DEBUG: full tree after make ===
+./bin/default/lib/replace/closefrom.c.1.o
+./bin/default/lib/replace/closefrom.c.2.o
+./bin/default/lib/replace/replace.c.1.o
+./bin/default/lib/replace/replace.c.2.o
+./bin/default/lib/replace/replace.empty.c.4.o
+./bin/default/lib/replace/tests/getifaddrs.c.5.o
+./bin/default/lib/replace/tests/main.c.6.o
+./bin/default/lib/replace/tests/os2_delete.c.5.o
+./bin/default/lib/replace/tests/strptime.c.5.o
+./bin/default/lib/replace/tests/testsuite.c.5.o
+./bin/default/libtalloc.so
+./bin/default/talloc.c.5.o
+./bin/default/talloc.c.6.o
+./bin/default/test_magic_differs_helper.c.3.o
+./bin/default/testsuite.c.1.o
+./bin/default/testsuite_main.c.1.o
+talloc.o not found ANYWHERE under /home/runner/work/thawra-alimia-termux-ai/thawra-alimia-termux-ai/build/talloc
