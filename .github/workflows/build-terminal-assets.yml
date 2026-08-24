@@ -128,26 +128,50 @@ jobs:
 
           make -j"$(nproc)" 2>&1 | tee "$GITHUB_WORKSPACE/talloc-build.log"
 
+          # waf compiles talloc.c more than once (talloc.c.5.o, talloc.c.6.o -
+          # one for libtalloc.so, one likely for the talloc_testsuite binary),
+          # and blanket-archiving every .o (including test-only ones) lost
+          # symbols somewhere rather than gaining them. Be precise instead:
+          # for any duplicate talloc.c.N.o candidates, keep only ones that
+          # actually define a symbol we know must be present (used as a
+          # canary since it was one of the ones reported missing), and
+          # unconditionally skip anything under a tests/ path or named
+          # testsuite*/test_*.
           {
-            echo "=== DEBUG: full tree after make ==="
-            find . -type f \( -name "*.o" -o -name "*.a" -o -name "*.so*" \) | sort
-            TALLOC_O=$(find . -name "talloc.o" | head -1)
-            if [ -n "$TALLOC_O" ]; then
-              echo "=== DEBUG: nm on $TALLOC_O ==="
-              llvm-nm "$TALLOC_O" 2>&1 | grep -i "talloc_set_destructor\|talloc_report_depth" || echo "those symbols NOT in $TALLOC_O"
-            else
-              echo "talloc.o not found ANYWHERE under $(pwd)"
+            echo "=== selecting object files for libtalloc.a ==="
+            mkdir -p "$PREFIX/lib" "$PREFIX/include"
+            SELECTED=()
+            while IFS= read -r -d '' obj; do
+              case "$obj" in
+                */tests/*|*/testsuite*|*/test_*) 
+                  echo "skip (test file): $obj"
+                  continue
+                  ;;
+              esac
+              if [[ "$obj" == *talloc.c.*.o ]]; then
+                if llvm-nm "$obj" 2>/dev/null | grep -q " T talloc_report_depth_cb$"; then
+                  echo "keep (has canary symbol): $obj"
+                  SELECTED+=("$obj")
+                else
+                  echo "skip (missing canary symbol): $obj"
+                fi
+              else
+                echo "keep (non-talloc.c support object): $obj"
+                SELECTED+=("$obj")
+              fi
+            done < <(find . -name "*.o" -print0)
+
+            if [ ${#SELECTED[@]} -eq 0 ]; then
+              echo "ERROR: no object file with the canary symbol was found"
+              exit 1
             fi
+            "$AR" rcs "$PREFIX/lib/libtalloc.a" "${SELECTED[@]}"
+            echo "--- final archive contents ---"
+            "$AR" t "$PREFIX/lib/libtalloc.a"
+            echo "--- verifying canary symbol is resolvable in the archive ---"
+            llvm-nm "$PREFIX/lib/libtalloc.a" | grep -B2 " T talloc_report_depth_cb$"
           } | tee -a "$GITHUB_WORKSPACE/talloc-build.log"
 
-          # Archive every .o waf produced (not just a narrow talloc*.o
-          # glob in bin/default/ - that missed several object files in
-          # subdirectories, which showed up later as undefined symbols
-          # like talloc_unlink/talloc_get_name when linking proot).
-          mkdir -p "$PREFIX/lib" "$PREFIX/include"
-          find bin -name "*.o" -print0 | xargs -0 "$AR" rcs "$PREFIX/lib/libtalloc.a"
-          echo "objects archived:"
-          "$AR" t "$PREFIX/lib/libtalloc.a"
           find "$GITHUB_WORKSPACE/build/talloc" -maxdepth 1 -name "talloc.h" -exec cp {} "$PREFIX/include/" \;
           echo "talloc built: $(ls -la $PREFIX/lib/libtalloc.a)"
 
