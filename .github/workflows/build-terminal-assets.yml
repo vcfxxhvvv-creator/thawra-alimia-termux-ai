@@ -1,7 +1,7 @@
 name: Build Terminal Assets
 on:
   push:
-    branches: [main]
+    branches: [main, terminal-v2-buildtime]
     paths:
       - '.github/workflows/build-terminal-assets.yml'
       - 'terminal-build/**'

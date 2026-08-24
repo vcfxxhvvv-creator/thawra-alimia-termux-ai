@@ -1,6 +1,6 @@
 name: Build APK
 on:
-  push: {branches: [main]}
+  push: {branches: [main, terminal-v2-buildtime]}
   workflow_dispatch:
 jobs:
   build-apk:
