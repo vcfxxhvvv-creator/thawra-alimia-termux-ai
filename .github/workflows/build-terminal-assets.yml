@@ -301,14 +301,23 @@ jobs:
 
           git clone --depth 1 https://github.com/termux/termux-core-package.git build/termux-core-src
           cd build/termux-core-src
+          # NOTE: explicitly passing CC here. termux-exec's build correctly
+          # inherited $CC from the environment (confirmed in its log), but
+          # termux-core's first attempt silently fell back to the HOST's
+          # x86_64 gcc ("is incompatible with elf64-x86-64", and "collect2"
+          # in the error is a GCC-specific driver, not clang) - its
+          # Makefile most likely has its own plain CC assignment that
+          # overrides an inherited env var. Command-line args beat
+          # everything, so passing CC explicitly here is the reliable fix.
           make -j"$(nproc)" \
+            CC="$CC" \
             TERMUX_APP__NAME="Thawra Alimia" \
             TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
             TERMUX_PKGS__BUILD__REPO_ROOT_DIR="$GITHUB_WORKSPACE/build/termux-packages-repo" \
             all 2>&1 | tee "$GITHUB_WORKSPACE/termux-core-build.log"
           BUILD_STATUS=${PIPESTATUS[0]}
           if [ "$BUILD_STATUS" -eq 0 ]; then
-            make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+            make CC="$CC" TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
               TERMUX_PKGS__BUILD__REPO_ROOT_DIR="$GITHUB_WORKSPACE/build/termux-packages-repo" \
               install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
           fi
