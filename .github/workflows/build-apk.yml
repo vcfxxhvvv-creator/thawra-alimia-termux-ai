@@ -2,6 +2,8 @@ name: Build APK
 on:
   push: {branches: [main, terminal-v2-buildtime]}
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build-apk:
     runs-on: ubuntu-latest
@@ -37,8 +39,27 @@ jobs:
         run: npm install -g eas-cli@latest
       - name: Build APK
         run: |
-          eas build --platform android --profile preview --non-interactive --local --output thawra.apk 2>&1 | tail -30 || \
-          eas build --platform android --profile preview --non-interactive 2>&1 | tail -30
+          set +e
+          eas build --platform android --profile preview --non-interactive --local --output thawra.apk 2>&1 | tee "$GITHUB_WORKSPACE/eas-build.log"
+          LOCAL_STATUS=${PIPESTATUS[0]}
+          echo "local eas build exit status: $LOCAL_STATUS"
+          if [ "$LOCAL_STATUS" -ne 0 ]; then
+            echo "=== local build failed, trying remote (cloud) build as fallback ==="
+            eas build --platform android --profile preview --non-interactive 2>&1 | tee -a "$GITHUB_WORKSPACE/eas-build.log"
+          fi
+          set -e
+
+      - name: Save EAS build log
+        if: always()
+        run: |
+          mkdir -p ci-debug
+          cp eas-build.log ci-debug/eas-build.log 2>/dev/null || echo "no log captured" > ci-debug/eas-build.log
+          git config user.email "ci@local"
+          git config user.name "terminal-assets-ci"
+          git add -f ci-debug/eas-build.log
+          git diff --cached --quiet && echo "no change to log" && exit 0
+          git commit -m "ci: capture eas build log [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
       - id: findapk
         run: |
           APK=$(find . -name '*.apk' -type f 2>/dev/null | head -1)
