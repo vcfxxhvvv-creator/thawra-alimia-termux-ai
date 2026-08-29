@@ -66,6 +66,7 @@ jobs:
           echo "$TOOLCHAIN/bin" >> "$GITHUB_PATH"
           {
             echo "CC=$TOOLCHAIN/bin/aarch64-linux-android${API_LEVEL}-clang"
+            echo "CXX=$TOOLCHAIN/bin/aarch64-linux-android${API_LEVEL}-clang++"
             echo "AR=$TOOLCHAIN/bin/llvm-ar"
             echo "STRIP=$TOOLCHAIN/bin/llvm-strip"
             echo "RANLIB=$TOOLCHAIN/bin/llvm-ranlib"
@@ -311,13 +312,14 @@ jobs:
           # everything, so passing CC explicitly here is the reliable fix.
           make -j"$(nproc)" \
             CC="$CC" \
+            CXX="$CXX" \
             TERMUX_APP__NAME="Thawra Alimia" \
             TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
             TERMUX_PKGS__BUILD__REPO_ROOT_DIR="$GITHUB_WORKSPACE/build/termux-packages-repo" \
             all 2>&1 | tee "$GITHUB_WORKSPACE/termux-core-build.log"
           BUILD_STATUS=${PIPESTATUS[0]}
           if [ "$BUILD_STATUS" -eq 0 ]; then
-            make CC="$CC" TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+            make CC="$CC" CXX="$CXX" TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
               TERMUX_PKGS__BUILD__REPO_ROOT_DIR="$GITHUB_WORKSPACE/build/termux-packages-repo" \
               install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-core-build.log"
           fi
@@ -348,6 +350,8 @@ jobs:
           REAL_PREFIX="/data/data/$APP_PACKAGE/files/usr"
 
           make -j"$(nproc)" \
+            CC="$CC" \
+            CXX="$CXX" \
             TERMUX_APP__NAME="Thawra Alimia" \
             TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
             all 2>&1 | tee "$GITHUB_WORKSPACE/termux-exec-build.log"
@@ -355,7 +359,7 @@ jobs:
           echo "termux-exec build status: $BUILD_STATUS"
 
           if [ "$BUILD_STATUS" -eq 0 ]; then
-            make TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
+            make CC="$CC" CXX="$CXX" TERMUX_APP__PACKAGE_NAME="$APP_PACKAGE" \
               install 2>&1 | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
             echo "--- install dir contents ---"
             find "$REAL_PREFIX" -name "*termux-exec*" -o -name "*.so" 2>/dev/null | tee -a "$GITHUB_WORKSPACE/termux-exec-build.log"
