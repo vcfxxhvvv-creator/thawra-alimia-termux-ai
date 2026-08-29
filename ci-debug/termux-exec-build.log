@@ -13,8 +13,144 @@ for source_file in lib/termux-exec_nos_c/tre/src/TermuxExecLibraryConfig.c lib/t
 		-o build/output/tmp/"$(echo "$source_file" | sed -E "s/(.*)\.c$/\1.o/")" \
 		"$source_file" || exit $?; \
 done
-lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/TermuxExecLDPreload.c:14:10: fatal error: 'termux/termux_core__nos__c/v1/android/shell/command/environment/AndroidShellEnvironment.h' file not found
-   14 | #include <termux/termux_core__nos__c/v1/android/shell/command/environment/AndroidShellEnvironment.h>
-      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1 error generated.
-make: *** [Makefile:293: build-libtermux-exec_nos_c_tre] Error 1
+
+termux-exec-package: Building lib/libtermux-exec_nos_c_tre.so
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" \
+	-Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL \
+	-DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" \
+	-fPIC -shared -fvisibility=default \
+	-o build/output/usr/lib/libtermux-exec_nos_c_tre.so \
+	build/output/tmp/lib/termux-exec_nos_c/tre/src/TermuxExecLibraryConfig.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/TermuxExecLDPreload.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/direct/exec/ExecIntercept.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/direct/exec/ExecVariantsIntercept.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/os/process/termux_exec/TermuxExecProcess.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/shell/command/environment/termux_exec/TermuxExecShellEnvironment.o \
+	-l:libtermux-core_nos_c_tre.a
+
+termux-exec-package: Building lib/libtermux-exec_nos_c_tre.a
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar rcs build/output/usr/lib/libtermux-exec_nos_c_tre.a build/output/tmp/lib/termux-exec_nos_c/tre/src/TermuxExecLibraryConfig.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/TermuxExecLDPreload.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/direct/exec/ExecIntercept.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/api/termux_exec/service/ld_preload/direct/exec/ExecVariantsIntercept.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/os/process/termux_exec/TermuxExecProcess.o build/output/tmp/lib/termux-exec_nos_c/tre/src/termux/shell/command/environment/termux_exec/TermuxExecShellEnvironment.o
+
+termux-exec-package: Building lib/termux-exec_nos_c/tre/tests/*
+
+termux-exec-package: Building lib/termux-exec_nos_c/tre/tests/libtermux-exec_nos_c_tre_tests
+sed -e "s%[@]TERMUX_EXEC_PKG__VERSION[@]%2.5.0%g" -e "s%[@]TERMUX_EXEC_PKG__ARCH[@]%aarch64%g" -e "s%[@]TERMUX__LNAME[@]%termux%g" -e "s%[@]TERMUX__REPOS_HOST_ORG_NAME[@]%termux%g" -e "s%[@]TERMUX_APP__NAME[@]%Thawra Alimia%g" -e "s%[@]TERMUX_APP__PACKAGE_NAME[@]%com.thawra.termux.ai%g" -e "s%[@]TERMUX_APP__DATA_DIR[@]%/data/data/com.thawra.termux.ai%g" -e "s%[@]TERMUX__ROOTFS[@]%/data/data/com.thawra.termux.ai/files%g" -e "s%[@]TERMUX__PREFIX[@]%/data/data/com.thawra.termux.ai/files/usr%g" -e "s%[@]TERMUX_ENV__S_TERMUX[@]%TERMUX__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_APP[@]%TERMUX_APP__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC[@]%TERMUX_EXEC__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC__TESTS[@]%TERMUX_EXEC__TESTS__%g" "lib/termux-exec_nos_c/tre/tests/libtermux-exec_nos_c_tre_tests.in" > "build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/$(basename "lib/termux-exec_nos_c/tre/tests/libtermux-exec_nos_c_tre_tests")"
+chmod 700 build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/libtermux-exec_nos_c_tre_tests
+
+termux-exec-package: Building lib/termux-exec_nos_c/tre/tests/bin/libtermux-exec_nos_c_tre_unit-binary-tests
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" -Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL -DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" -fPIE -pie -fvisibility=hidden -O0 -g \
+	-fsanitize=address -fsanitize-recover=address -fno-omit-frame-pointer \
+	-o build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_unit-binary-tests-fsanitize \
+	lib/termux-exec_nos_c/tre/tests/src/libtermux-exec_nos_c_tre_unit-binary-tests.c \
+	-l:libtermux-exec_nos_c_tre.a -l:libtermux-core_nos_c_tre.a
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" -Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL -DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" -fPIE -pie -fvisibility=hidden -O0 -g \
+	-o build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_unit-binary-tests-nofsanitize \
+	lib/termux-exec_nos_c/tre/tests/src/libtermux-exec_nos_c_tre_unit-binary-tests.c \
+	-l:libtermux-exec_nos_c_tre.a -l:libtermux-core_nos_c_tre.a
+
+termux-exec-package: Building lib/termux-exec_nos_c/tre/tests/bin/libtermux-exec_nos_c_tre_runtime-binary-tests
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" -Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL -DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" -fPIE -pie -fvisibility=hidden -O0 -g \
+	-fsanitize=address -fsanitize-recover=address -fno-omit-frame-pointer \
+	-o build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_runtime-binary-tests-fsanitize \
+	lib/termux-exec_nos_c/tre/tests/src/libtermux-exec_nos_c_tre_runtime-binary-tests.c \
+	-l:libtermux-exec_nos_c_tre.a -l:libtermux-core_nos_c_tre.a
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" -Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL -DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" -fPIE -pie -fvisibility=hidden -O0 -g \
+	-o build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_runtime-binary-tests-nofsanitize \
+	lib/termux-exec_nos_c/tre/tests/src/libtermux-exec_nos_c_tre_runtime-binary-tests.c \
+	-l:libtermux-exec_nos_c_tre.a -l:libtermux-core_nos_c_tre.a
+
+termux-exec-package: Building lib/termux-exec_nos_c/tre/tests/scripts/*
+find lib/termux-exec_nos_c/tre/tests/scripts -type f -name '*.c' -print0 | xargs -0 -n1 sh -c \
+	'output_file="build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/scripts/$(printf "%s" "$0" | sed -e "s|^lib/termux-exec_nos_c/tre/tests/scripts/||" -e "s/\.c$//")" && mkdir -p "$(dirname "$output_file")" && /usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -O0 -fPIE -pie -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -g "$0" -o "$output_file"'
+find lib/termux-exec_nos_c/tre/tests/scripts -type f -name '*.sh' -print0 | xargs -0 -n1 sh -c \
+	'output_file="build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/scripts/$(printf "%s" "$0" | sed -e "s|^lib/termux-exec_nos_c/tre/tests/scripts/||")" && mkdir -p "$(dirname "$output_file")" && cp -a "$0" "$output_file"'
+find lib/termux-exec_nos_c/tre/tests/scripts -type f -name "*.in" -print0 | xargs -0 -n1 sh -c \
+	'output_file="build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/scripts/$(printf "%s" "$0" | sed -e "s|^lib/termux-exec_nos_c/tre/tests/scripts/||" -e "s/\.in$//")" && mkdir -p "$(dirname "$output_file")" && sed -e "s%[@]TERMUX_EXEC_PKG__VERSION[@]%2.5.0%g" -e "s%[@]TERMUX_EXEC_PKG__ARCH[@]%aarch64%g" -e "s%[@]TERMUX__LNAME[@]%termux%g" -e "s%[@]TERMUX__REPOS_HOST_ORG_NAME[@]%termux%g" -e "s%[@]TERMUX_APP__NAME[@]%Thawra Alimia%g" -e "s%[@]TERMUX_APP__PACKAGE_NAME[@]%com.thawra.termux.ai%g" -e "s%[@]TERMUX_APP__DATA_DIR[@]%/data/data/com.thawra.termux.ai%g" -e "s%[@]TERMUX__ROOTFS[@]%/data/data/com.thawra.termux.ai/files%g" -e "s%[@]TERMUX__PREFIX[@]%/data/data/com.thawra.termux.ai/files/usr%g" -e "s%[@]TERMUX_ENV__S_TERMUX[@]%TERMUX__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_APP[@]%TERMUX_APP__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC[@]%TERMUX_EXEC__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC__TESTS[@]%TERMUX_EXEC__TESTS__%g" "$0" > "$output_file"'
+find lib/termux-exec_nos_c/tre/tests/scripts -type l -print0 | xargs -0 -n1 sh -c \
+	'output_file="build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/scripts/$(printf "%s" "$0" | sed -e "s|^lib/termux-exec_nos_c/tre/tests/scripts/||")" && mkdir -p "$(dirname "$output_file")" && cp -a "$0" "$output_file"'
+find build/output/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/scripts -type f -exec chmod 700 "{}" \;
+
+termux-exec-package: Building lib/libtermux-exec-direct-ld-preload
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" \
+	-Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL \
+	-DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" \
+	-fPIC -shared -fvisibility=hidden \
+	-o build/output/usr/lib/libtermux-exec-direct-ld-preload.so \
+	app/termux-exec-direct-ld-preload/src/termux/api/termux_exec/service/ld_preload/direct/TermuxExecDirectLDPreloadEntryPoint.c \
+	-l:libtermux-exec_nos_c_tre.a -l:libtermux-core_nos_c_tre.a
+cp -a build/output/usr/lib/libtermux-exec-direct-ld-preload.so build/output/usr/lib/libtermux-exec-ld-preload.so
+rm -f build/output/usr/lib/libtermux-exec.so
+ln -s libtermux-exec-ld-preload.so build/output/usr/lib/libtermux-exec.so
+
+termux-exec-package: Building lib/libtermux-exec-linker-ld-preload
+/usr/local/lib/android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang  -Wall -Wextra -Werror -Wshadow -O2 -D_FORTIFY_SOURCE=2 -fstack-protector-strong -isystem/data/data/com.thawra.termux.ai/files/usr/include -I "/data/data/com.thawra.termux.ai/files/usr/include/termux-core" -I "lib/termux-exec_nos_c/tre/include" \
+	-Lbuild/output/usr/lib -L/data/data/com.thawra.termux.ai/files/usr/lib -Wl,-rpath=/data/data/com.thawra.termux.ai/files/usr/lib -Wl,--enable-new-dtags -Wl,--as-needed -Wl,-z,relro,-z,now -Wl,--exclude-libs=ALL \
+	-DTERMUX_EXEC_PKG__VERSION=\"2.5.0\" -DTERMUX__NAME=\"Termux\" -DTERMUX__LNAME=\"termux\" -DTERMUX__REPOS_HOST_ORG_NAME=\"termux\" -DTERMUX_APP__DATA_DIR=\"/data/data/com.thawra.termux.ai\" -DTERMUX__ROOTFS=\"/data/data/com.thawra.termux.ai/files\" -DTERMUX__PREFIX=\"/data/data/com.thawra.termux.ai/files/usr\" -DTERMUX__PREFIX__BIN_DIR=\"/data/data/com.thawra.termux.ai/files/usr/bin\" -DTERMUX_ENV__S_TERMUX=\"TERMUX__\" -DTERMUX_ENV__S_TERMUX_APP=\"TERMUX_APP__\" -DTERMUX_ENV__S_TERMUX_ROOTFS=\"TERMUX_ROOTFS__\" -DTERMUX_ENV__S_TERMUX_EXEC=\"TERMUX_EXEC__\" -DTERMUX_ENV__S_TERMUX_EXEC__TESTS=\"TERMUX_EXEC__TESTS__\" \
+	-fPIC -shared -fvisibility=hidden \
+	-o build/output/usr/lib/libtermux-exec-linker-ld-preload.so \
+	app/termux-exec-linker-ld-preload/src/termux/api/termux_exec/service/ld_preload/linker/TermuxExecLinkerLDPreloadEntryPoint.c \
+	-l:libtermux-exec_nos_c_tre.a -l:libtermux-core_nos_c_tre.a
+
+termux-exec-package: Building app/main
+
+termux-exec-package: Building app/main/scripts/*
+find app/main/scripts -type f -name "*.in" -exec sh -c \
+	'sed -e "s%[@]TERMUX_EXEC_PKG__VERSION[@]%2.5.0%g" -e "s%[@]TERMUX_EXEC_PKG__ARCH[@]%aarch64%g" -e "s%[@]TERMUX__LNAME[@]%termux%g" -e "s%[@]TERMUX__REPOS_HOST_ORG_NAME[@]%termux%g" -e "s%[@]TERMUX_APP__NAME[@]%Thawra Alimia%g" -e "s%[@]TERMUX_APP__PACKAGE_NAME[@]%com.thawra.termux.ai%g" -e "s%[@]TERMUX_APP__DATA_DIR[@]%/data/data/com.thawra.termux.ai%g" -e "s%[@]TERMUX__ROOTFS[@]%/data/data/com.thawra.termux.ai/files%g" -e "s%[@]TERMUX__PREFIX[@]%/data/data/com.thawra.termux.ai/files/usr%g" -e "s%[@]TERMUX_ENV__S_TERMUX[@]%TERMUX__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_APP[@]%TERMUX_APP__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC[@]%TERMUX_EXEC__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC__TESTS[@]%TERMUX_EXEC__TESTS__%g" "$1" > build/output/usr/bin/"$(basename "$1" | sed "s/\.in$//")"' sh "{}" \;
+find build/output/usr/bin -maxdepth 1 -exec chmod 700 "{}" \;
+find app/main/scripts -type l -exec cp -a "{}" build/output/usr/bin/ \;
+
+termux-exec-package: Building app/main/tests/*
+find app/main/tests -maxdepth 1 -type f -name "*.in" -print0 | xargs -0 -n1 sh -c \
+	'output_file="build/output/usr/libexec/installed-tests/termux-exec/app/main/$(printf "%s" "$0" | sed -e "s|^app/main/tests/||" -e "s/\.in$//")" && mkdir -p "$(dirname "$output_file")" && sed -e "s%[@]TERMUX_EXEC_PKG__VERSION[@]%2.5.0%g" -e "s%[@]TERMUX_EXEC_PKG__ARCH[@]%aarch64%g" -e "s%[@]TERMUX__LNAME[@]%termux%g" -e "s%[@]TERMUX__REPOS_HOST_ORG_NAME[@]%termux%g" -e "s%[@]TERMUX_APP__NAME[@]%Thawra Alimia%g" -e "s%[@]TERMUX_APP__PACKAGE_NAME[@]%com.thawra.termux.ai%g" -e "s%[@]TERMUX_APP__DATA_DIR[@]%/data/data/com.thawra.termux.ai%g" -e "s%[@]TERMUX__ROOTFS[@]%/data/data/com.thawra.termux.ai/files%g" -e "s%[@]TERMUX__PREFIX[@]%/data/data/com.thawra.termux.ai/files/usr%g" -e "s%[@]TERMUX_ENV__S_TERMUX[@]%TERMUX__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_APP[@]%TERMUX_APP__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC[@]%TERMUX_EXEC__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC__TESTS[@]%TERMUX_EXEC__TESTS__%g" "$0" > "$output_file"'
+find build/output/usr/libexec/installed-tests/termux-exec/app/main -maxdepth 1 -type f -exec chmod 700 "{}" \;
+
+termux-exec-package: Building packaging/debian/*
+find packaging/debian -mindepth 1 -maxdepth 1 -type f -name "*.in" -exec sh -c \
+	'sed -e "s%[@]TERMUX_EXEC_PKG__VERSION[@]%2.5.0%g" -e "s%[@]TERMUX_EXEC_PKG__ARCH[@]%aarch64%g" -e "s%[@]TERMUX__LNAME[@]%termux%g" -e "s%[@]TERMUX__REPOS_HOST_ORG_NAME[@]%termux%g" -e "s%[@]TERMUX_APP__NAME[@]%Thawra Alimia%g" -e "s%[@]TERMUX_APP__PACKAGE_NAME[@]%com.thawra.termux.ai%g" -e "s%[@]TERMUX_APP__DATA_DIR[@]%/data/data/com.thawra.termux.ai%g" -e "s%[@]TERMUX__ROOTFS[@]%/data/data/com.thawra.termux.ai/files%g" -e "s%[@]TERMUX__PREFIX[@]%/data/data/com.thawra.termux.ai/files/usr%g" -e "s%[@]TERMUX_ENV__S_TERMUX[@]%TERMUX__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_APP[@]%TERMUX_APP__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC[@]%TERMUX_EXEC__%g" -e "s%[@]TERMUX_ENV__S_TERMUX_EXEC__TESTS[@]%TERMUX_EXEC__TESTS__%g" "$1" > build/output/packaging/debian/"$(basename "$1" | sed "s/\.in$//")"' sh "{}" \;
+find build/output/packaging/debian -mindepth 1 -maxdepth 1 -type f \
+	-regextype posix-extended -regex "^.*/(postinst|postrm|preinst|prerm)$" \
+	-exec chmod 700 {} \;
+find build/output/packaging/debian -mindepth 1 -maxdepth 1 -type f \
+	-regextype posix-extended -regex "^.*/(config|conffiles|templates|triggers|clilibs|fortran_mod|runit|shlibs|starlibs|symbols)$" \
+	-exec chmod 600 {} \;
+
+termux-exec-package: Build termux-exec-package successful
+
+termux-exec-package: Installing termux-exec-package in /data/data/com.thawra.termux.ai/files/usr
+install -d /data/data/com.thawra.termux.ai/files/usr/bin
+install -d /data/data/com.thawra.termux.ai/files/usr/include
+install -d /data/data/com.thawra.termux.ai/files/usr/lib
+install -d /data/data/com.thawra.termux.ai/files/usr/libexec
+find build/output/usr/bin -maxdepth 1 \( -type f -o -type l \) -exec cp -a "{}" /data/data/com.thawra.termux.ai/files/usr/bin/ \;
+rm -rf /data/data/com.thawra.termux.ai/files/usr/include/termux-exec
+install -d /data/data/com.thawra.termux.ai/files/usr/include/termux-exec/termux
+cp -a lib/termux-exec_nos_c/tre/include/termux/termux_exec__nos__c /data/data/com.thawra.termux.ai/files/usr/include/termux-exec/termux/termux_exec__nos__c
+install build/output/usr/lib/libtermux-exec_nos_c_tre.so /data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec_nos_c_tre.so
+install build/output/usr/lib/libtermux-exec_nos_c_tre.a /data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec_nos_c_tre.a
+install build/output/usr/lib/libtermux-exec-ld-preload.so /data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec-ld-preload.so
+install build/output/usr/lib/libtermux-exec-direct-ld-preload.so /data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec-direct-ld-preload.so
+install build/output/usr/lib/libtermux-exec-linker-ld-preload.so /data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec-linker-ld-preload.so
+cp -a build/output/usr/lib/libtermux-exec.so /data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec.so
+find /data/data/com.thawra.termux.ai/files/usr/include/termux-exec -type d -exec chmod 700 {} \;
+find /data/data/com.thawra.termux.ai/files/usr/include/termux-exec -type f -exec chmod 600 {} \;
+rm -rf /data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec
+install -d /data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests
+cp -a build/output/usr/libexec/installed-tests/termux-exec /data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec
+
+termux-exec-package: Install termux-exec-package successful
+
+/data/data/com.thawra.termux.ai/files/usr/bin/termux-exec-ld-preload-lib
+/data/data/com.thawra.termux.ai/files/usr/bin/termux-exec-system-linker-exec
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/app/main/termux-exec-tests
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_runtime-binary-tests-fsanitize
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_unit-binary-tests-nofsanitize
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_unit-binary-tests-fsanitize
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/bin/libtermux-exec_nos_c_tre_runtime-binary-tests-nofsanitize
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/libtermux-exec_nos_c_tre_tests
+/data/data/com.thawra.termux.ai/files/usr/libexec/installed-tests/termux-exec/lib/termux-exec_nos_c/tre/scripts/libtermux-exec_nos_c_tre_runtime-script-tests
+/data/data/com.thawra.termux.ai/files/usr/include/termux-exec
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec-ld-preload.so
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-core_nos_cxx_tre.so
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec.so
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-core_nos_c_tre.so
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec-direct-ld-preload.so
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec_nos_c_tre.a
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec-linker-ld-preload.so
+/data/data/com.thawra.termux.ai/files/usr/lib/libtermux-exec_nos_c_tre.so
