@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, KeyboardAvoidingView, Platform, Animated, Dimensions, StatusBar, SafeAreaView, ScrollView } from 'react-native';
+import TerminalScreen from './src/TerminalScreen';
 
 const { width } = Dimensions.get('window');
 const PORT = 5000;
@@ -35,6 +36,7 @@ const Bubble:React.FC<{m:Msg;a:Animated.Value}>=({m,a})=>{
 };
 
 export default function App(){
+  const[view,setView]=useState<'chat'|'terminal'>('chat');
   const[msgs,setMsgs]=useState<Msg[]>([{id:'0',text:'🌟 ثورة علمية v2.0\nAI محلي + Termux + FFmpegKit\nاسأل: فيزياء|كيمياء|ذكاء اصطناعي|رياضيات|فلك|ffmpeg|سلام',sender:'ai',ts:new Date(),conf:1}]);
   const[inp,setInp]=useState('');
   const[loading,setLoading]=useState(false);
@@ -44,10 +46,22 @@ export default function App(){
   const add=(m:Omit<Msg,'id'|'ts'>)=>{const f:Msg={...m,id:Date.now()+''+Math.random(),ts:new Date()};setMsgs(p=>[...p,f])};
   const send=async()=>{if(!inp.trim()||loading)return;const t=inp.trim();setInp('');add({text:t,sender:'user'});setLoading(true);const res=await ai(t);add({text:res.text,sender:'ai',conf:res.conf});setLoading(false)};
   const qs=['فيزياء','كيمياء','ذكاء اصطناعي','رياضيات','فلك','ffmpeg','سلام'];
+
+  if(view==='terminal'){
+    return(<SafeAreaView style={S.c}>
+      <StatusBar barStyle='light-content' backgroundColor='#050510'/>
+      <View style={S.hdr}><View style={S.hRow}>
+        <TouchableOpacity onPress={()=>setView('chat')}><Text style={S.hI}>💬</Text></TouchableOpacity>
+        <View style={S.hInf}><Text style={S.hT}>الترمينال</Text><Text style={S.hS}>proot + Alpine + termux-exec</Text></View>
+      </View></View>
+      <TerminalScreen/>
+    </SafeAreaView>);
+  }
+
   return(<SafeAreaView style={S.c}>
     <StatusBar barStyle='light-content' backgroundColor='#050510'/>
     <KeyboardAvoidingView style={S.c} behavior={Platform.OS==='ios'?'padding':undefined}>
-      <View style={S.hdr}><View style={S.hRow}><Text style={S.hI}>🔬</Text><View style={S.hInf}><Text style={S.hT}>ثورة علمية v2.0</Text><Text style={S.hS}>{loading?'🟡 جاري التفكير...':'🟢 جاهز'}</Text></View></View></View>
+      <View style={S.hdr}><View style={S.hRow}><Text style={S.hI}>🔬</Text><View style={S.hInf}><Text style={S.hT}>ثورة علمية v2.0</Text><Text style={S.hS}>{loading?'🟡 جاري التفكير...':'🟢 جاهز'}</Text></View><TouchableOpacity onPress={()=>setView('terminal')}><Text style={S.hI}>🖥️</Text></TouchableOpacity></View></View>
       {msgs.length<=1&&<View style={S.qW}><Text style={S.qT}>⚡ أسئلة سريعة</Text><ScrollView horizontal showsHorizontalScrollIndicator={false}>{qs.map(q=><TouchableOpacity key={q} style={S.qB} onPress={()=>setInp(q)}><Text style={S.qBT}>{q}</Text></TouchableOpacity>)}</ScrollView></View>}
       <FlatList ref={lr} data={msgs} renderItem={({item})=><Bubble m={item} a={gA(item.id)}/>} keyExtractor={i=>i.id} contentContainerStyle={S.list} onContentSizeChange={()=>lr.current?.scrollToEnd({animated:true})}/>
       {loading&&<View style={[S.row,S.aR]}><View style={S.av}><Text style={S.avT}>🧠</Text></View><View style={[S.bub,S.aB]}><Text style={S.thT}>جاري التفكير...</Text></View></View>}
