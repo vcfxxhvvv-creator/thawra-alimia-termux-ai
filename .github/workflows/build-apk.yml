@@ -53,6 +53,7 @@ jobs:
 
       - name: Save Gradle build log
         if: always()
+        continue-on-error: true
         run: |
           mkdir -p ci-debug
           cp gradle-build.log ci-debug/gradle-build.log 2>/dev/null || echo "no log captured" > ci-debug/gradle-build.log
